@@ -46,9 +46,16 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# add
 android/
 ios/
 linux/
 macos/
 web/
 windows/
+
+*.g.dart
+*.freezed.dart
+ads_options.dart
+assets/fonts/*
+assets/icon/*
