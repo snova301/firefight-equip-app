@@ -64,13 +64,13 @@ class DrawerContentsListTile extends ConsumerWidget {
         /// 電力計算画面へ
         ListTile(
           title: Text(
-            PageNameEnum.elecPower.title,
+            PageNameEnum.fireExt.title,
             style: TextStyle(fontSize: fontSize),
           ),
-          leading: Icon(PageNameEnum.elecPower.icon),
+          leading: Icon(PageNameEnum.fireExt.icon),
           onTap: () {
             /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.elecPower.title);
+            AnalyticsService().logPage(PageNameEnum.fireExt.title);
 
             Navigator.popUntil(context, (route) => route.isFirst);
             Navigator.push(
@@ -189,11 +189,12 @@ class SnackBarAlert {
 class AnalyticsService {
   Future<void> logPage(String screenName) async {
     await FirebaseAnalytics.instance.logEvent(
-        // name: 'screen_view',
-        // parameters: {
-        //   'firebase_screen': screenName,
-        // },
-        name: screenName);
+      name: screenName,
+      // name: '変更だよ',
+      // parameters: {
+      //   'firebase_screen': screenName,
+      // },
+    );
   }
 }
 

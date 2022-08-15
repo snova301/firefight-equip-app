@@ -1,3 +1,4 @@
+import 'package:firefight_equip/src/view/select_fire_extinguisher_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firefight_equip/src/model/data_class.dart';
@@ -34,18 +35,18 @@ class MyHomePage extends ConsumerWidget {
                   EdgeInsets.fromLTRB(screenWidth / 6, 80, screenWidth / 6, 80),
               children: <Widget>[
                 _PagePush(
-                  title: PageNameEnum.cableDesign.title,
-                  pagepush: const SettingPage(),
+                  title: PageNameEnum.fireExt.title,
+                  pagepush: const SelectFireExtPage(),
                   backGroundColor: Colors.green,
                   textColor: Colors.white,
-                  icon: PageNameEnum.elecPower.icon,
+                  icon: PageNameEnum.fireExt.icon,
                 ),
                 _PagePush(
-                  title: PageNameEnum.wiring.title,
-                  pagepush: const SettingPage(),
+                  title: PageNameEnum.fireExt.title,
+                  pagepush: const SelectFireExtPage(),
                   backGroundColor: Colors.green,
                   textColor: Colors.white,
-                  icon: PageNameEnum.wiring.icon,
+                  icon: PageNameEnum.fireExt.icon,
                 ),
                 _PagePush(
                   title: PageNameEnum.setting.title,
@@ -95,8 +96,6 @@ class _PagePush extends ConsumerWidget {
         onTap: () {
           /// ページ遷移のanalytics
           AnalyticsService().logPage(title);
-
-          // throw Exception();
 
           /// ページ遷移
           Navigator.push(

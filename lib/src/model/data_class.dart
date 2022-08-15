@@ -62,10 +62,7 @@ extension PowerUnitEnumExt on PowerUnitEnum {
 /// ページ名enum
 enum PageNameEnum {
   toppage,
-  cableDesign,
-  elecPower,
-  conduit,
-  wiring,
+  fireExt,
   setting,
   about,
 }
@@ -76,14 +73,9 @@ extension PageNameEnumExt on PageNameEnum {
     switch (this) {
       case PageNameEnum.toppage:
         return 'トップページ';
-      case PageNameEnum.cableDesign:
-        return 'ケーブル設計';
-      case PageNameEnum.elecPower:
-        return '電力計算';
-      case PageNameEnum.conduit:
-        return '電線管設計';
-      case PageNameEnum.wiring:
-        return '配線管理';
+      case PageNameEnum.fireExt:
+        return '消火器計算';
+
       case PageNameEnum.setting:
         return '設定';
       case PageNameEnum.about:
@@ -95,14 +87,8 @@ extension PageNameEnumExt on PageNameEnum {
     switch (this) {
       case PageNameEnum.toppage:
         return Icons.home_rounded;
-      case PageNameEnum.cableDesign:
-        return Icons.design_services;
-      case PageNameEnum.elecPower:
-        return Icons.calculate;
-      case PageNameEnum.conduit:
-        return Icons.gavel_rounded;
-      case PageNameEnum.wiring:
-        return Icons.list_alt;
+      case PageNameEnum.fireExt:
+        return Icons.fire_extinguisher;
       case PageNameEnum.setting:
         return Icons.settings;
       case PageNameEnum.about:

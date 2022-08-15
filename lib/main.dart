@@ -72,7 +72,7 @@ class MyAppState extends ConsumerState<MyApp> {
       home: const MyHomePage(),
       theme: ThemeData(
         // brightness: isDarkMode ? Brightness.dark : Brightness.light,
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.red,
         // elevatedButtonTheme: ElevatedButtonThemeData(
         //   style: ButtonStyle(
         //     backgroundColor: MaterialStateProperty.all(Colors.green),
