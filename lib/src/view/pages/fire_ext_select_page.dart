@@ -1,10 +1,9 @@
-import 'package:firefight_equip/src/view/fire_extinguisher_require_page.dart';
+import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/view/widgets/drawer_contents_widget.dart';
+import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firefight_equip/src/model/data_class.dart';
-import 'package:firefight_equip/src/view/about_page.dart';
-import 'package:firefight_equip/src/view/setting_page.dart';
-import 'package:firefight_equip/src/view/common_widgets.dart';
+import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 
 class SelectFireExtPage extends ConsumerWidget {
   const SelectFireExtPage({Key? key}) : super(key: key);
@@ -14,20 +13,34 @@ class SelectFireExtPage extends ConsumerWidget {
     /// 画面情報
     final screenWidth = MediaQuery.of(context).size.width;
 
+    /// レスポンシブ設定
+    bool isDrawerFixed = checkResponsive(screenWidth);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(PageNameEnum.fireExt.title),
       ),
-      body: ListView(
-        padding: EdgeInsets.fromLTRB(screenWidth / 6, 80, screenWidth / 6, 80),
-        children: const <Widget>[
-          _PagePush(
-            title: '消火器 設置基準計算',
-            pagepush: FireExtRequirePage(),
-          ),
-          _PagePush(
-            title: '消火器 能力単位計算',
-            pagepush: SettingPage(),
+      body: Row(
+        children: [
+          /// 画面幅が規定以上でメニューを左側に固定
+          isDrawerFixed ? const DrawerContentsFixed() : Container(),
+
+          /// サイズ指定されていないとエラーなのでExpandedで囲む
+          Expanded(
+            child: ListView(
+              padding:
+                  EdgeInsets.fromLTRB(screenWidth / 8, 60, screenWidth / 8, 60),
+              children: <Widget>[
+                _PagePush(
+                  title: PageNameEnum.fireExtRequ.title,
+                  pagepush: PageNameEnum.fireExtRequ.page,
+                ),
+                _PagePush(
+                  title: PageNameEnum.fireExtCapa.title,
+                  pagepush: PageNameEnum.fireExtCapa.page,
+                ),
+              ],
+            ),
           ),
         ],
       ),

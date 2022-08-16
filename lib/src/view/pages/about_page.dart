@@ -1,5 +1,5 @@
-import 'package:firefight_equip/src/model/data_class.dart';
-import 'package:firefight_equip/src/view/common_widgets.dart';
+import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 
 /// 使い方やライセンスページをリンクするためのページ

@@ -1,10 +1,11 @@
-import 'package:firefight_equip/main.dart';
 // import 'package:elec_facility_calc/ads_options.dart';
-import 'package:firefight_equip/src/model/data_class.dart';
-import 'package:firefight_equip/src/view/common_widgets.dart';
+import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/view/widgets/fire_prevent_property_select_widget.dart';
+import 'package:firefight_equip/src/view/widgets/input_text_card.dart';
+import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
+import 'package:firefight_equip/src/viewmodel/fire_ext_require_model.dart';
 import 'package:firefight_equip/src/viewmodel/state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// 電力計算ページ
@@ -21,7 +22,6 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
     /// 画面情報取得
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
-    // final blockWidth = screenWidth / 100 * 20;
     final listViewPadding = screenWidth / 20;
 
     /// レスポンシブ設定
@@ -37,9 +37,7 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            PageNameEnum.fireExt.title,
-          ),
+          title: Text(PageNameEnum.fireExt.title),
         ),
         body: Row(
           children: [
@@ -55,16 +53,15 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 入力表示
                   const SeparateText(title: '計算条件'),
 
-                  /// 電圧入力
+                  /// 防火対象物の選択
+                  const FirePreventPropertySelectDD(),
+
+                  /// 面積入力
                   InputTextCard(
-                    title: '線間電圧',
-                    // unit: ref.watch(elecPowerProvider).voltUnit.str,
-                    message: '整数のみ',
-                    // controller: ref.watch(elecPowerTxtCtrVoltProvider),
-                    // onPressedVoltUnitFunc: (VoltUnitEnum value) => ref
-                    //     .read(elecPowerProvider.notifier)
-                    //     .updateVoltUnit(value),
-                  ),
+                      title: '面積',
+                      unit: 'm2',
+                      message: '整数のみ',
+                      controller: ref.watch(textInputProvider)),
 
                   /// 計算実行ボタン
                   CalcRunButton(
@@ -122,72 +119,7 @@ class SeparateText extends ConsumerWidget {
   }
 }
 
-/// 入力用のwidget
-class InputTextCard extends ConsumerWidget {
-  final String title; // タイトル
-  final String? unit; // 単位
-  final String message; // tooltip用メッセージ
-  final TextEditingController? controller; // TextEditingController
-
-  const InputTextCard({
-    Key? key,
-    required this.title,
-    this.unit,
-    required this.message,
-    this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Card(
-      elevation: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          /// タイトル
-          Container(
-            margin: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-            child: Tooltip(
-              message: message,
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          ),
-
-          /// 表示
-          controller != null && unit != null
-              ? ListTile(
-                  title: TextField(
-                    controller: controller,
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                  ),
-                  trailing: Text(
-                    unit!,
-                    style: const TextStyle(
-                      fontSize: 13,
-                    ),
-                  ),
-                )
-              : Container(),
-        ],
-      ),
-    );
-  }
-}
-
-/// 結果用のwidget
+/// 結果表示用のwidget
 class OutputTextCard extends ConsumerWidget {
   final String title; // 出力タイトル
   final String unit; // 単位

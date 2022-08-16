@@ -1,8 +1,9 @@
-import 'package:firefight_equip/src/view/common_widgets.dart';
+import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
+import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firefight_equip/src/viewmodel/state_manager.dart';
-import 'package:firefight_equip/src/model/data_class.dart';
 
 /// 設定ページ
 class SettingPage extends ConsumerWidget {

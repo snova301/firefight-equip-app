@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firefight_equip/src/view/home_page.dart';
+import 'package:firefight_equip/src/view/pages/home_page.dart';
 import 'package:firefight_equip/src/viewmodel/state_manager.dart';
 
 /// プラットフォームの確認

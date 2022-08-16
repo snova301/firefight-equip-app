@@ -1,10 +1,8 @@
-import 'package:firefight_equip/src/view/select_fire_extinguisher_page.dart';
+import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/view/widgets/drawer_contents_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firefight_equip/src/model/data_class.dart';
-import 'package:firefight_equip/src/view/about_page.dart';
-import 'package:firefight_equip/src/view/setting_page.dart';
-import 'package:firefight_equip/src/view/common_widgets.dart';
+import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -36,26 +34,26 @@ class MyHomePage extends ConsumerWidget {
               children: <Widget>[
                 _PagePush(
                   title: PageNameEnum.fireExt.title,
-                  pagepush: const SelectFireExtPage(),
-                  backGroundColor: Colors.green,
+                  pagepush: PageNameEnum.fireExt.page,
+                  backGroundColor: Colors.red,
                   textColor: Colors.white,
                   icon: PageNameEnum.fireExt.icon,
                 ),
                 _PagePush(
                   title: PageNameEnum.fireExt.title,
-                  pagepush: const SelectFireExtPage(),
-                  backGroundColor: Colors.green,
+                  pagepush: PageNameEnum.fireExt.page,
+                  backGroundColor: Colors.red,
                   textColor: Colors.white,
                   icon: PageNameEnum.fireExt.icon,
                 ),
                 _PagePush(
                   title: PageNameEnum.setting.title,
-                  pagepush: const SettingPage(),
+                  pagepush: PageNameEnum.setting.page,
                   icon: PageNameEnum.setting.icon,
                 ),
                 _PagePush(
                   title: PageNameEnum.about.title,
-                  pagepush: const AboutPage(),
+                  pagepush: PageNameEnum.about.page,
                 ),
               ],
             ),
@@ -72,11 +70,11 @@ class MyHomePage extends ConsumerWidget {
 
 /// 各ページへの遷移
 class _PagePush extends ConsumerWidget {
-  final String title;
-  final dynamic pagepush;
-  final Color? backGroundColor;
-  final Color? textColor;
-  final IconData? icon;
+  final String title; // 移動先ページの名前
+  final dynamic pagepush; // ページのクラス名
+  final Color? backGroundColor; // カードの背景色
+  final Color? textColor; // カードの背景色
+  final IconData? icon; // カードのアイコン
 
   const _PagePush({
     Key? key,
