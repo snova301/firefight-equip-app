@@ -9,9 +9,9 @@ class FirePreventPropertySelectDD extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      minVerticalPadding: 10,
-      title: DropdownButtonFormField(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: DropdownButtonFormField(
         decoration: const InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(

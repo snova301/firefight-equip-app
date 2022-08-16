@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firefight_equip/src/notifiers/setting_notifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,7 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firefight_equip/src/view/pages/home_page.dart';
-import 'package:firefight_equip/src/viewmodel/state_manager.dart';
+import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
 
 /// プラットフォームの確認
 final isAndroid =
@@ -56,7 +57,7 @@ class MyAppState extends ConsumerState<MyApp> {
 
     /// shared_preferencesの設定読込
     try {
-      // StateManagerClass().getPrefs(ref);
+      SharedPrefClass().getPrefs(ref);
     } catch (e) {
       // print(e);
     }
@@ -64,14 +65,14 @@ class MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // final isDarkMode = ref.watch(settingProvider).darkMode;
+    final isDarkMode = ref.watch(settingProvider).darkMode;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: '電気設備計算アシスタント',
       home: const MyHomePage(),
       theme: ThemeData(
-        // brightness: isDarkMode ? Brightness.dark : Brightness.light,
+        brightness: isDarkMode ? Brightness.dark : Brightness.light,
         primarySwatch: Colors.red,
         // elevatedButtonTheme: ElevatedButtonThemeData(
         //   style: ButtonStyle(

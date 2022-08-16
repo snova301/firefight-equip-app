@@ -1,7 +1,5 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
-import 'package:firefight_equip/src/view/pages/about_page.dart';
 import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
-import 'package:firefight_equip/src/view/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -79,7 +77,7 @@ class DrawerContentsListTile extends ConsumerWidget {
             //   ),
             // );
 
-            /// ページプッシュしてもとのページのスタックを削除
+            /// ページプッシュしてもとのページを削除
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -105,7 +103,7 @@ class DrawerContentsListTile extends ConsumerWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const SettingPage(),
+                builder: (context) => PageNameEnum.setting.page,
               ),
             );
           },
@@ -141,7 +139,7 @@ class DrawerContentsListTile extends ConsumerWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AboutPage(),
+                builder: (context) => PageNameEnum.about.page,
               ),
             );
           },

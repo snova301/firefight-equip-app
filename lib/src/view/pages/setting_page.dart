@@ -1,9 +1,9 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
-import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
+import 'package:firefight_equip/src/notifiers/setting_notifier.dart';
+import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firefight_equip/src/viewmodel/state_manager.dart';
 
 /// 設定ページ
 class SettingPage extends ConsumerWidget {
@@ -12,7 +12,7 @@ class SettingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// shared_prefのデータ保存用非同期providerの読み込み
-    // ref.watch(settingSPSetProvider);
+    ref.watch(settingSPSetProvider);
 
     /// レスポンシブ設定
     final screenWidth = MediaQuery.of(context).size.width;

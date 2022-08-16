@@ -16,13 +16,18 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
       : super(const FireExtRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
           sq: 10,
+          isNoWindow: false,
           isNeeded: false,
         ));
-  // FireExtRequireNotifier({FireExtRequireClass(firePreventProperty:FirePreventPropertyEnum.no1I,sq: 10,isNeeded: false,)});
 
-  /// データの更新
+  /// 防火対象物の更新
   void updateFirePreventProperty(FirePreventPropertyEnum newProperty) {
     state = state.copyWith(firePreventProperty: newProperty);
+  }
+
+  /// 無窓階真偽値の更新
+  void updateIsNoWindow(bool newBool) {
+    state = state.copyWith(isNoWindow: newBool);
   }
 
   // /// 全データの更新
@@ -30,18 +35,13 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
   //   state = {...data};
   // }
 
-  // /// 削除
-  // void remove(String id) {
-  //   /// 新規追加または変更
-  //   Map temp = state;
-  //   temp.remove(id);
-  //   state = {...temp};
-  // }
-
-  // /// データを初期化
-  // void removeAll() {
-  //   state = {};
-  // }
 }
 
 final textInputProvider = StateProvider((ref) => TextEditingController());
+
+final fireExtReqOutputProvider = StateProvider((ref) {
+  if (ref.watch(fireExtRequireProvider).isNeeded) {
+    return '設置義務があります';
+  }
+  return '設置義務はありません';
+});

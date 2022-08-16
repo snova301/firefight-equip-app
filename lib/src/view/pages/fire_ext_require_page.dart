@@ -1,10 +1,12 @@
 // import 'package:elec_facility_calc/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/fire_prevent_property_select_widget.dart';
-import 'package:firefight_equip/src/view/widgets/input_text_card.dart';
+import 'package:firefight_equip/src/view/widgets/input_text_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
-import 'package:firefight_equip/src/viewmodel/fire_ext_require_model.dart';
-import 'package:firefight_equip/src/viewmodel/state_manager.dart';
+import 'package:firefight_equip/src/view/widgets/run_button_widget.dart';
+import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
+import 'package:firefight_equip/src/notifiers/fire_ext_require_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -63,16 +65,45 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                       message: '整数のみ',
                       controller: ref.watch(textInputProvider)),
 
+                  /// 地階、無窓階、3F以上のチェックボックス
+                  CheckBoxCard(
+                    title: '地階、無窓階、3F以上',
+                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    func: (bool newBool) {
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateIsNoWindow(newBool);
+                    },
+                  ),
+
+                  /// 少量危険物のチェックボックス
+                  CheckBoxCard(
+                    title: '少量危険物、指定可燃物',
+                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    func: (bool newBool) {
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateIsNoWindow(newBool);
+                    },
+                  ),
+
+                  /// 火を使用する器具のチェックボックス
+                  /// 3項の判断に使用
+                  CheckBoxCard(
+                    title: '火を使用する器具(防火対象物 3項の判断に使用)',
+                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    func: (bool newBool) {
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateIsNoWindow(newBool);
+                    },
+                  ),
+
                   /// 計算実行ボタン
-                  CalcRunButton(
+                  RunButton(
                     // paddingSize: blockWidth,
                     func: () {
-                      // /// textcontrollerのデータを取得
-                      // final volt = ref.read(elecPowerTxtCtrVoltProvider).text;
-                      // final current =
-                      //     ref.read(elecPowerTxtCtrCurrentProvider).text;
-                      // final cosFai =
-                      //     ref.read(elecPowerTxtCtrCosFaiProvider).text;
+                      null;
                     },
                   ),
 
@@ -82,12 +113,10 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 結果表示
                   const SeparateText(title: '計算結果'),
 
-                  /// 皮相電力
-                  // OutputTextCard(
-                  //   title: '皮相電力',
-                  //   unit: ref.watch(elecPowerProvider).powerUnit.strApparent,
-                  //   result: ref.watch(elecPowerApparentPowerProvider),
-                  // ),
+                  /// 結果表示
+                  _OutputText(
+                    result: ref.watch(fireExtReqOutputProvider),
+                  )
                 ],
               ),
             ),
@@ -98,117 +127,35 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
   }
 }
 
-/// 計算条件や計算結果の文字表示widget
-class SeparateText extends ConsumerWidget {
-  final String title; // 入力文字列
-
-  const SeparateText({Key? key, required this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        child: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
 /// 結果表示用のwidget
-class OutputTextCard extends ConsumerWidget {
-  final String title; // 出力タイトル
-  final String unit; // 単位
+class _OutputText extends ConsumerWidget {
   final String result; // 出力結果
 
-  const OutputTextCard({
-    Key? key,
-    required this.title,
-    required this.unit,
-    required this.result,
-  }) : super(key: key);
+  const _OutputText({Key? key, required this.result}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          /// タイトル
-          Container(
-            // padding: const EdgeInsets.all(8),
-            margin: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 13,
-              ),
-            ),
-          ),
-
-          /// 結果表示
-          ListTile(
-            title: Text(
-              result,
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            trailing: result == '候補なし' || result == '候補なし(電圧要確認)'
-                ? const Text('')
-                : Text(
-                    unit,
-                    style: const TextStyle(
-                      fontSize: 13,
-                    ),
-                  ),
-          ),
-
-          ///
-        ],
-      ),
-    );
-  }
-}
-
-/// 実行ボタンのWidget
-class CalcRunButton extends ConsumerWidget {
-  final Function() func;
-
-  const CalcRunButton({
-    Key? key,
-    required this.func,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
-        onPressed: () {
-          FocusScope.of(context).unfocus();
-          func();
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.red),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          padding: MaterialStateProperty.all(
-            const EdgeInsets.fromLTRB(30, 20, 30, 20),
-          ),
-        ),
-        child: const Text(
-          '計算実行',
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text(
+          '消火器の',
           style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
           ),
         ),
-      ),
+        Text(
+          result,
+          style: const TextStyle(
+            fontSize: 18,
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }
