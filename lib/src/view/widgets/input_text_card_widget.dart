@@ -8,6 +8,7 @@ class InputTextCard extends ConsumerWidget {
   final String? unit; // 単位
   final String message; // tooltip用メッセージ
   final TextEditingController controller; // TextEditingController
+  final Function(String value) func; // 入力完了後に実行される関数
 
   const InputTextCard({
     Key? key,
@@ -15,6 +16,7 @@ class InputTextCard extends ConsumerWidget {
     this.unit,
     required this.message,
     required this.controller,
+    required this.func,
   }) : super(key: key);
 
   @override
@@ -56,11 +58,18 @@ class InputTextCard extends ConsumerWidget {
                         fontSize: 18,
                       ),
                       keyboardType: TextInputType.number,
+                      // 入力形式の設定(数字のみ)
                       inputFormatters: [
                         // FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                         LengthLimitingTextInputFormatter(6),
                       ],
+                      onSubmitted: (String value) {
+                        func(value);
+                      },
+                      // onChanged: (String value) {
+                      //   func(value);
+                      // },
                     ),
                   ),
                 ),

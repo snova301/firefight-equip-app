@@ -15,7 +15,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
   FireExtRequireNotifier()
       : super(const FireExtRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
-          sq: 10,
+          sq: 0,
           isNoWindow: false,
           isCombust: false,
           isUsedFire: false,
@@ -30,7 +30,11 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
 
   /// 面積の更新
   void updateSq(String newVal) {
-    state = state.copyWith(sq: int.parse(newVal));
+    try {
+      state = state.copyWith(sq: int.parse(newVal));
+    } catch (e) {
+      state = state.copyWith(sq: 0);
+    }
   }
 
   /// 無窓階真偽値の更新

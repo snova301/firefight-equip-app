@@ -71,11 +71,14 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 面積入力
                   InputTextCard(
                     title: ref.watch(fireExtRequireProvider).isNoWindow
-                        ? '床面積(整数のみ)'
-                        : '延べ面積(整数のみ)', // 地階、無窓階、3F以上の階は床面積で判断
+                        ? '床面積(整数のみ)' // 地階、無窓階、3F以上の階は床面積で判断
+                        : '延べ面積(整数のみ)',
                     unit: 'm2',
                     message: '整数のみ',
                     controller: ref.watch(fireExtReqSqTxtCtrlProvider),
+                    func: (String value) {
+                      ref.read(fireExtRequireProvider.notifier).updateSq(value);
+                    },
                   ),
 
                   /// 地階、無窓階、3F以上のチェックボックス
