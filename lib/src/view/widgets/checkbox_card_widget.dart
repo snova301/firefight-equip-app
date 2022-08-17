@@ -26,6 +26,9 @@ class CheckBoxCard extends ConsumerWidget {
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(
           title,
+          style: const TextStyle(
+            fontSize: 13,
+          ),
           overflow: TextOverflow.ellipsis,
         ),
       ),

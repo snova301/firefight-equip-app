@@ -39,7 +39,7 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(PageNameEnum.fireExt.title),
+          title: Text(PageNameEnum.fireExtRequ.title),
         ),
         body: Row(
           children: [
@@ -56,14 +56,27 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   const SeparateText(title: '計算条件'),
 
                   /// 防火対象物の選択
-                  const FirePreventPropertySelectDD(),
+                  FirePreventPropertySelectDD(
+                    value: ref
+                        .watch(fireExtRequireProvider)
+                        .firePreventProperty
+                        .title,
+                    func: (FirePreventPropertyEnum value) {
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateFirePreventProperty(value);
+                    },
+                  ),
 
                   /// 面積入力
                   InputTextCard(
-                      title: '面積',
-                      unit: 'm2',
-                      message: '整数のみ',
-                      controller: ref.watch(textInputProvider)),
+                    title: ref.watch(fireExtRequireProvider).isNoWindow
+                        ? '床面積(整数のみ)'
+                        : '延べ面積(整数のみ)', // 地階、無窓階、3F以上の階は床面積で判断
+                    unit: 'm2',
+                    message: '整数のみ',
+                    controller: ref.watch(fireExtReqSqTxtCtrlProvider),
+                  ),
 
                   /// 地階、無窓階、3F以上のチェックボックス
                   CheckBoxCard(
@@ -79,23 +92,23 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 少量危険物のチェックボックス
                   CheckBoxCard(
                     title: '少量危険物、指定可燃物',
-                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    isChecked: ref.watch(fireExtRequireProvider).isCombust,
                     func: (bool newBool) {
                       ref
                           .read(fireExtRequireProvider.notifier)
-                          .updateIsNoWindow(newBool);
+                          .updateIsCombust(newBool);
                     },
                   ),
 
                   /// 火を使用する器具のチェックボックス
                   /// 3項の判断に使用
                   CheckBoxCard(
-                    title: '火を使用する器具(防火対象物 3項の判断に使用)',
-                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    title: '火を使用する器具を設置',
+                    isChecked: ref.watch(fireExtRequireProvider).isUsedFire,
                     func: (bool newBool) {
                       ref
                           .read(fireExtRequireProvider.notifier)
-                          .updateIsNoWindow(newBool);
+                          .updateIsUsedFire(newBool);
                     },
                   ),
 
@@ -103,7 +116,12 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   RunButton(
                     // paddingSize: blockWidth,
                     func: () {
-                      null;
+                      final sqTxtCtrl =
+                          ref.read(fireExtReqSqTxtCtrlProvider).text;
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateSq(sqTxtCtrl);
+                      ref.read(fireExtRequireProvider.notifier).run();
                     },
                   ),
 
@@ -115,8 +133,14 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
 
                   /// 結果表示
                   _OutputText(
-                    result: ref.watch(fireExtReqOutputProvider),
-                  )
+                    preface: '消火器の',
+                    result: ref.watch(fireExtRequireProvider).strOut,
+                  ),
+
+                  _OutputText(
+                    preface: ref.watch(fireExtRequireProvider).reason,
+                    prefaceFontSize: 12,
+                  ),
                 ],
               ),
             ),
@@ -129,33 +153,51 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
 
 /// 結果表示用のwidget
 class _OutputText extends ConsumerWidget {
-  final String result; // 出力結果
+  final String preface; // 序文
+  final double? prefaceFontSize; // 序文のフォントサイズ
+  final String? result; // 出力結果
 
-  const _OutputText({Key? key, required this.result}) : super(key: key);
+  const _OutputText({
+    Key? key,
+    required this.preface,
+    this.prefaceFontSize,
+    this.result,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text(
-          '消火器の',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-            fontWeight: FontWeight.bold,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          // 序文
+          Flexible(
+            child: Text(
+              preface,
+              style: TextStyle(
+                fontSize: prefaceFontSize ?? 14,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.clip,
+            ),
           ),
-        ),
-        Text(
-          result,
-          style: const TextStyle(
-            fontSize: 18,
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
+          // 本文
+          result == null
+              ? Container()
+              : Text(
+                  result!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.visible,
+                ),
+        ],
+      ),
     );
   }
 }

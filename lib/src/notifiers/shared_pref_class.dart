@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefClass {
   /// 以前の計算データをshared_preferencesから削除
   void removeCalc(WidgetRef ref) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
 
     /// キャッシュ削除
     // prefs.remove(SharedPrefEnum.calcCableDesign.name);
@@ -37,7 +37,7 @@ class SharedPrefClass {
           .read(settingProvider.notifier)
           .updateDarkMode(getSettingData.darkMode);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 }

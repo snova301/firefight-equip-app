@@ -8,9 +8,9 @@ import 'package:firefight_equip/src/view/pages/setting_page.dart';
 /// ページ名enum
 enum PageNameEnum {
   toppage('トップページ', MyHomePage(), Icons.home_rounded),
-  fireExt('消火器計算', SelectFireExtPage(), Icons.fire_extinguisher),
-  fireExtRequ('消火器 設置基準計算', FireExtRequirePage(), Icons.fire_extinguisher),
-  fireExtCapa('消火器 能力単位計算', FireExtRequirePage(), Icons.fire_extinguisher),
+  fireExt('消火器具計算', SelectFireExtPage(), Icons.fire_extinguisher),
+  fireExtRequ('消火器具 設置基準計算', FireExtRequirePage(), Icons.fire_extinguisher),
+  fireExtCapa('消火器具 能力単位計算', FireExtRequirePage(), Icons.fire_extinguisher),
   setting('設定', SettingPage(), Icons.settings),
   about('About', AboutPage(), Icons.info_outline);
 
@@ -34,7 +34,8 @@ enum FirePreventPropertyEnum {
   no4('(4)項  百貨店、マーケット、その他', true),
   no5I('(5)項イ  旅館、ホテル、宿泊所、その他', true),
   no5Ro('(5)項ロ  寄宿舎、下宿又は共同住宅', false),
-  no6I('(6)項イ  病院、診療所、助産所', true),
+  no6I123('(6)項イ1〜3  入院施設がある病院、診療所、助産所', true),
+  no6I4('(6)項イ4  入院施設がない診療所、助産所', true),
   no6Ro('(6)項ロ  特別養護老人ホーム、救護施設、乳児院、障害児入所施設、その他', true),
   no6Ha('(6)項ハ  老人デイサービスセンター、更生施設、保育所、その他', true),
   no6Ni('(6)項ニ  幼稚園又は特別支援学校', true),

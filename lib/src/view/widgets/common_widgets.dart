@@ -1,10 +1,6 @@
-import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-final testProvider = StateProvider((ref) => FirePreventPropertyEnum.no1I.title);
 
 /// snackbarで注意喚起を行うWidget
 class SnackBarAlert {
