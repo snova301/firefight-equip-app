@@ -86,6 +86,28 @@ class DrawerContentsListTile extends ConsumerWidget {
           },
         ),
 
+        /// 警報設備計算選択画面
+        ListTile(
+          title: Text(
+            PageNameEnum.alarmEquip.title,
+            style: TextStyle(fontSize: fontSize),
+          ),
+          leading: Icon(PageNameEnum.alarmEquip.icon),
+          onTap: () {
+            /// ページ遷移のanalytics
+            AnalyticsService().logPage(PageNameEnum.alarmEquip.title);
+
+            /// ページプッシュしてもとのページを削除
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PageNameEnum.alarmEquip.page,
+              ),
+              (route) => false,
+            );
+          },
+        ),
+
         /// 設定画面へ
         ListTile(
           title: Text(

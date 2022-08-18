@@ -13,13 +13,13 @@ final fireExtRequireProvider =
 class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
   // 空のデータとして初期化
   FireExtRequireNotifier()
-      : super(const FireExtRequireClass(
+      : super(FireExtRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
           sq: 0,
           isNoWindow: false,
           isCombust: false,
           isUsedFire: false,
-          strOut: '設置義務はありません',
+          result: RequireSentenceEnum.none.title,
           reason: '',
         ));
 
@@ -76,7 +76,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
             firePreventProperty == FirePreventPropertyEnum.no16No3 ||
             firePreventProperty == FirePreventPropertyEnum.no17 ||
             firePreventProperty == FirePreventPropertyEnum.no20) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '※ 延べ面積に関係なく消火器具の設置が義務');
     } else if (
         // 延べ面積に関係なく設置義務がある防火対象物
@@ -84,14 +84,14 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
             isUsedFire) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state =
           state.copyWith(reason: '※ 火を使用する器具が設置されているため、延べ面積に関係なく消火器具の設置が義務');
     } else if (
         // 延べ面積に関係なく設置義務がある防火対象物
         // 少量危険物、指定可燃物
         isCombust) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '※ 少量危険物または指定可燃物を貯蔵または取り扱っているため');
     } else if (
         // 延べ面積150m2以上で設置義務がある防火対象物
@@ -111,7 +111,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no13Ro ||
                 firePreventProperty == FirePreventPropertyEnum.no14) &&
             sq >= 150) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '※ 延べ面積150m2以上で消火器具の設置が義務');
     } else if (
         // 延べ面積150m2以上で設置義務がある防火対象物
@@ -119,7 +119,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
             !isUsedFire) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state =
           state.copyWith(reason: '※ 火を使用する器具が設置されているため、延べ面積150m2以上で消火器具の設置が義務');
     } else if (
@@ -131,22 +131,22 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no11 ||
                 firePreventProperty == FirePreventPropertyEnum.no15) &&
             sq >= 300) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '※ 延べ面積300m2以上で消火器具の設置が義務');
     } else if (
         // 床面積50m2以上で設置義務がある防火対象物
         // 地階、無窓階、3F以上の階
         isNoWindow && sq >= 50) {
-      state = state.copyWith(strOut: '設置義務があります');
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '※ 地階、無窓階、3F以上の階は床面積が50m2以上で消火器具の設置が義務');
     } else if (
         // 複合用途防火対象物は当該用途の基準による
         firePreventProperty == FirePreventPropertyEnum.no16I ||
             firePreventProperty == FirePreventPropertyEnum.no16Ro) {
-      state = state.copyWith(strOut: '設置義務は当該用途の基準による');
+      state = state.copyWith(result: RequireSentenceEnum.complex.title);
       state = state.copyWith(reason: '');
     } else {
-      state = state.copyWith(strOut: '設置義務はありません');
+      state = state.copyWith(result: RequireSentenceEnum.no.title);
       state = state.copyWith(reason: 'ただし、市町村条例や危険物施設には注意してください');
     }
   }

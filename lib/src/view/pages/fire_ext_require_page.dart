@@ -1,7 +1,7 @@
 // import 'package:elec_facility_calc/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
-import 'package:firefight_equip/src/view/widgets/fire_prevent_property_select_widget.dart';
+import 'package:firefight_equip/src/view/widgets/dropdown_fire_prevent_property_widget.dart';
 import 'package:firefight_equip/src/view/widgets/input_text_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/output_text_widget.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
@@ -138,7 +138,7 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 結果表示
                   OutputText(
                     preface: '消火器の',
-                    result: ref.watch(fireExtRequireProvider).strOut,
+                    result: ref.watch(fireExtRequireProvider).result,
                   ),
 
                   OutputText(

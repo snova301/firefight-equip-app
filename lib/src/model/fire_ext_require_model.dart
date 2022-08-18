@@ -16,7 +16,7 @@ class FireExtRequireClass with _$FireExtRequireClass {
     required bool isUsedFire, // 火を使用する器具(防火対象物 3項の判断に使用)
 
     /// 出力
-    required String strOut, // 消火器設置が義務かどうか
+    required String result, // 消火器設置が義務かどうか
     required String reason, // 消火器具が必要な理由
   }) = _FireExtRequireClass;
 

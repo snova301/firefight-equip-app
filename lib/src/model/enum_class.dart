@@ -71,3 +71,42 @@ enum FirePreventPropertyEnum {
 
   const FirePreventPropertyEnum(this.title, this.isSpecific);
 }
+
+/// 自火報の階
+/// 自火報は階による制限がある
+enum FireAlarmFloorEnum {
+  basement('地階'),
+  floor1('1F'),
+  floor2('2F'),
+  floor3to10('3F - 10F'),
+  floorOver11('11F以上');
+
+  final String title;
+
+  const FireAlarmFloorEnum(this.title);
+}
+
+/// 自火報のその階の特殊用途
+enum FireAlarmUsedTypeEnum {
+  none('なし'),
+  parking('駐車場'),
+  commRoom('通信機器室'),
+  roadRoofTop('道路(屋上部分)'),
+  road('道路(その他の部分)');
+
+  final String title;
+
+  const FireAlarmUsedTypeEnum(this.title);
+}
+
+/// 設置義務があるかどうかの文章
+enum RequireSentenceEnum {
+  none(''),
+  yes('設置義務があります'),
+  no('設置義務はありません'),
+  complex('設置義務は当該用途の基準による');
+
+  final String title;
+
+  const RequireSentenceEnum(this.title);
+}
