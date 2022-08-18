@@ -40,7 +40,7 @@ class FireExtCapacityPageState extends ConsumerState<FireExtCapacityPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(PageNameEnum.fireExtCapa.title),
+          title: Text(PageNameEnum.fireExtCapacity.title),
         ),
         body: Row(
           children: [

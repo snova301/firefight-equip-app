@@ -1,3 +1,5 @@
+import 'package:firefight_equip/src/view/pages/alarm_equip_select_page.dart';
+import 'package:firefight_equip/src/view/pages/fire_alarm_require_page.dart';
 import 'package:firefight_equip/src/view/pages/fire_ext_capacity_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firefight_equip/src/view/pages/about_page.dart';
@@ -10,8 +12,11 @@ import 'package:firefight_equip/src/view/pages/setting_page.dart';
 enum PageNameEnum {
   toppage('トップページ', MyHomePage(), Icons.home_rounded),
   fireExt('消火器具計算', SelectFireExtPage(), Icons.fire_extinguisher),
-  fireExtRequ('消火器具 設置基準計算', FireExtRequirePage(), Icons.fire_extinguisher),
-  fireExtCapa('消火器具 能力単位計算', FireExtCapacityPage(), Icons.fire_extinguisher),
+  fireExtRequire('消火器具 設置基準計算', FireExtRequirePage(), null),
+  fireExtCapacity('消火器具 能力単位計算', FireExtCapacityPage(), null),
+  alarmEquip('警報設備計算', SelectFireAlarmPage(), Icons.alarm),
+  fireAlarmRequire('自動火災警報設備 設置基準計算', FireAlarmRequirePage(), null),
+  gasAlarmRequire('ガス漏れ警報設備 設置基準計算', FireAlarmRequirePage(), null),
   setting('設定', SettingPage(), Icons.settings),
   about('About', AboutPage(), Icons.info_outline);
 

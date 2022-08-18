@@ -5,8 +5,8 @@ import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SelectFireExtPage extends ConsumerWidget {
-  const SelectFireExtPage({Key? key}) : super(key: key);
+class SelectFireAlarmPage extends ConsumerWidget {
+  const SelectFireAlarmPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,7 +18,7 @@ class SelectFireExtPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(PageNameEnum.fireExt.title),
+        title: Text(PageNameEnum.alarmEquip.title),
       ),
       body: Row(
         children: [
@@ -32,12 +32,12 @@ class SelectFireExtPage extends ConsumerWidget {
                   EdgeInsets.fromLTRB(screenWidth / 8, 60, screenWidth / 8, 60),
               children: <Widget>[
                 PagePushButton(
-                  title: PageNameEnum.fireExtRequire.title,
-                  pagepush: PageNameEnum.fireExtRequire.page,
+                  title: PageNameEnum.fireAlarmRequire.title,
+                  pagepush: PageNameEnum.fireAlarmRequire.page,
                 ),
                 PagePushButton(
-                  title: PageNameEnum.fireExtCapacity.title,
-                  pagepush: PageNameEnum.fireExtCapacity.page,
+                  title: PageNameEnum.gasAlarmRequire.title,
+                  pagepush: PageNameEnum.gasAlarmRequire.page,
                 ),
               ],
             ),

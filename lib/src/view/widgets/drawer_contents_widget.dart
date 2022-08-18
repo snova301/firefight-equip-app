@@ -54,7 +54,13 @@ class DrawerContentsListTile extends ConsumerWidget {
           ),
           leading: Icon(PageNameEnum.toppage.icon),
           onTap: () {
-            Navigator.popUntil(context, (route) => route.isFirst);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PageNameEnum.toppage.page,
+              ),
+              (route) => false,
+            );
           },
         ),
 
@@ -68,14 +74,6 @@ class DrawerContentsListTile extends ConsumerWidget {
           onTap: () {
             /// ページ遷移のanalytics
             AnalyticsService().logPage(PageNameEnum.fireExt.title);
-
-            // Navigator.popUntil(context, (route) => route.isFirst);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const SettingPage(),
-            //   ),
-            // );
 
             /// ページプッシュしてもとのページを削除
             Navigator.pushAndRemoveUntil(

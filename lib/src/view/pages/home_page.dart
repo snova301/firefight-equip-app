@@ -32,26 +32,26 @@ class MyHomePage extends ConsumerWidget {
               padding:
                   EdgeInsets.fromLTRB(screenWidth / 6, 80, screenWidth / 6, 80),
               children: <Widget>[
-                _PagePush(
+                _PagePushCard(
                   title: PageNameEnum.fireExt.title,
                   pagepush: PageNameEnum.fireExt.page,
                   backGroundColor: Colors.red,
                   textColor: Colors.white,
                   icon: PageNameEnum.fireExt.icon,
                 ),
-                _PagePush(
-                  title: PageNameEnum.fireExt.title,
-                  pagepush: PageNameEnum.fireExt.page,
+                _PagePushCard(
+                  title: PageNameEnum.alarmEquip.title,
+                  pagepush: PageNameEnum.alarmEquip.page,
                   backGroundColor: Colors.red,
                   textColor: Colors.white,
-                  icon: PageNameEnum.fireExt.icon,
+                  icon: PageNameEnum.alarmEquip.icon,
                 ),
-                _PagePush(
+                _PagePushCard(
                   title: PageNameEnum.setting.title,
                   pagepush: PageNameEnum.setting.page,
                   icon: PageNameEnum.setting.icon,
                 ),
-                _PagePush(
+                _PagePushCard(
                   title: PageNameEnum.about.title,
                   pagepush: PageNameEnum.about.page,
                 ),
@@ -69,14 +69,14 @@ class MyHomePage extends ConsumerWidget {
 }
 
 /// 各ページへの遷移
-class _PagePush extends ConsumerWidget {
+class _PagePushCard extends ConsumerWidget {
   final String title; // 移動先ページの名前
   final dynamic pagepush; // ページのクラス名
   final Color? backGroundColor; // カードの背景色
   final Color? textColor; // カードの背景色
   final IconData? icon; // カードのアイコン
 
-  const _PagePush({
+  const _PagePushCard({
     Key? key,
     required this.title,
     required this.pagepush,
