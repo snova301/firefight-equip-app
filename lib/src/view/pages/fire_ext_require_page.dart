@@ -3,6 +3,7 @@ import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/fire_prevent_property_select_widget.dart';
 import 'package:firefight_equip/src/view/widgets/input_text_card_widget.dart';
+import 'package:firefight_equip/src/view/widgets/output_text_widget.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:firefight_equip/src/view/widgets/run_button_widget.dart';
 import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
@@ -10,7 +11,7 @@ import 'package:firefight_equip/src/notifiers/fire_ext_require_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 電力計算ページ
+/// 消火器具設置義務計算ページ
 class FireExtRequirePage extends ConsumerStatefulWidget {
   const FireExtRequirePage({Key? key}) : super(key: key);
 
@@ -135,12 +136,12 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   const SeparateText(title: '計算結果'),
 
                   /// 結果表示
-                  _OutputText(
+                  OutputText(
                     preface: '消火器の',
                     result: ref.watch(fireExtRequireProvider).strOut,
                   ),
 
-                  _OutputText(
+                  OutputText(
                     preface: ref.watch(fireExtRequireProvider).reason,
                     prefaceFontSize: 12,
                   ),
@@ -149,57 +150,6 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// 結果表示用のwidget
-class _OutputText extends ConsumerWidget {
-  final String preface; // 序文
-  final double? prefaceFontSize; // 序文のフォントサイズ
-  final String? result; // 出力結果
-
-  const _OutputText({
-    Key? key,
-    required this.preface,
-    this.prefaceFontSize,
-    this.result,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          // 序文
-          Flexible(
-            child: Text(
-              preface,
-              style: TextStyle(
-                fontSize: prefaceFontSize ?? 14,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.clip,
-            ),
-          ),
-          // 本文
-          result == null
-              ? Container()
-              : Text(
-                  result!,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: TextOverflow.visible,
-                ),
-        ],
       ),
     );
   }

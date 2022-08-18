@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:firefight_equip/src/model/data_class.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/model/setting_model.dart';
 import 'package:firefight_equip/src/notifiers/setting_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';

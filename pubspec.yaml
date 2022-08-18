@@ -39,7 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   flutter_launcher_icons: ^0.10.0
-
+  flutter_native_splash: ^2.2.7
 
   # add package
   # google_mobile_ads: ^2.0.0
@@ -68,8 +68,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
-
-
   # for Freezed
   build_runner: ^2.2.0
   freezed: ^2.1.0+1
@@ -80,6 +78,15 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/test_icon.png"
+  web:
+    generate: true
+    image_path: "assets/icon/test_icon.png"
+
+
+# splash_screen
+flutter_native_splash:
+  image: assets/icon/test_icon.png
+  color: "#ff0000"
 
 
 # For information on the generic Dart part of this file, see the

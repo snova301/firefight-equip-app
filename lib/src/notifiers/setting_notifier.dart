@@ -1,4 +1,4 @@
-import 'package:firefight_equip/src/model/data_class.dart';
+import 'package:firefight_equip/src/model/setting_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// 設定のProviderの定義

@@ -1,3 +1,4 @@
+import 'package:firefight_equip/src/view/pages/fire_ext_capacity_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firefight_equip/src/view/pages/about_page.dart';
 import 'package:firefight_equip/src/view/pages/fire_ext_require_page.dart';
@@ -10,7 +11,7 @@ enum PageNameEnum {
   toppage('トップページ', MyHomePage(), Icons.home_rounded),
   fireExt('消火器具計算', SelectFireExtPage(), Icons.fire_extinguisher),
   fireExtRequ('消火器具 設置基準計算', FireExtRequirePage(), Icons.fire_extinguisher),
-  fireExtCapa('消火器具 能力単位計算', FireExtRequirePage(), Icons.fire_extinguisher),
+  fireExtCapa('消火器具 能力単位計算', FireExtCapacityPage(), Icons.fire_extinguisher),
   setting('設定', SettingPage(), Icons.settings),
   about('About', AboutPage(), Icons.info_outline);
 
@@ -60,8 +61,8 @@ enum FirePreventPropertyEnum {
   no19('(19)項  市町村長の指定する山林', false),
   no20('(20)項  総務省令で定める舟車', false);
 
-  final String title;
-  final bool isSpecific;
+  final String title; // 文字表示
+  final bool isSpecific; // 特定防火対象物か
 
   const FirePreventPropertyEnum(this.title, this.isSpecific);
 }
