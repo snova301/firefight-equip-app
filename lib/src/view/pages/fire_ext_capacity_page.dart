@@ -164,86 +164,31 @@ class FireExtCapacityPageState extends ConsumerState<FireExtCapacityPage> {
                   const SeparateText(title: '計算結果'),
 
                   /// A火災の能力単位
-                  // OutputText(
-                  //   preface: 'A消火器の能力単位 : ',
-                  //   result:
-                  //       ref.watch(fireExtCapacityProvider).resultA.toString(),
-                  // ),
                   OutputText(
                     preface: 'A消火器の能力単位 : ',
                     result:
                         ref.watch(fireExtCapacityProvider).resultA.toString(),
                   ),
 
-                  // Text(
-                  //   ref.watch(fireExtCapacityProvider).resultA.toString(),
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //     fontSize: 18,
-                  //     color: Colors.red,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  //   overflow: TextOverflow.clip,
-                  // ),
-
                   /// C火災の消火器の本数
-                  // OutputText(
-                  //   preface: '電気設備がある場所の消火器本数(付加設置) : ',
-                  //   result:
-                  //       '${ref.watch(fireExtCapacityProvider).resultC.toString()} 本',
-                  // ),
                   OutputText(
                     preface: '電気設備がある場所の消火器本数(付加設置) : ',
                     result:
                         '${ref.watch(fireExtCapacityProvider).resultC.toString()} 本',
                   ),
-                  // Text(
-                  //   ref.watch(fireExtCapacityProvider).resultC.toString(),
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //     fontSize: 18,
-                  //     color: Colors.red,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  //   overflow: TextOverflow.clip,
-                  // ),
 
                   /// ボイラー室付加設置の消火器の本数
-                  // OutputText(
-                  //   preface: 'ボイラー室がある場所の消火器本数(付加設置) : ',
-                  //   result:
-                  //       '${ref.watch(fireExtCapacityProvider).resultBoiler.toString()} 本',
-                  // ),
                   OutputText(
                     preface: 'ボイラー室がある場所の消火器本数(付加設置) : ',
                     result:
                         '${ref.watch(fireExtCapacityProvider).resultBoiler.toString()} 本',
                   ),
-                  // Text(
-                  //   ref.watch(fireExtCapacityProvider).resultBoiler.toString(),
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //     fontSize: 18,
-                  //     color: Colors.red,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  //   overflow: TextOverflow.clip,
-                  // ),
 
                   /// B火災の能力単位
                   OutputText(
                     preface: 'B消火器の能力単位(付加設置) : ',
                     result: ref.watch(fireExtCapacityProvider).resultB,
                   ),
-                  // Text(
-                  //   ref.watch(fireExtCapacityProvider).resultB,
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //     color: Colors.red,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  //   overflow: TextOverflow.clip,
-                  // ),
                 ],
               ),
             ),

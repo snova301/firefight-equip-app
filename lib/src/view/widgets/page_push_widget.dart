@@ -22,7 +22,7 @@ class PagePushButton extends ConsumerWidget {
       child: ElevatedButton(
         /// ボタンのスタイル
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.red),
+          backgroundColor: MaterialStateProperty.all(Colors.orange),
           // padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
           // minimumSize: MaterialStateProperty.all(const Size(10, 50)),
         ),

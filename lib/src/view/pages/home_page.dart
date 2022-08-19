@@ -35,14 +35,14 @@ class MyHomePage extends ConsumerWidget {
                 _PagePushCard(
                   title: PageNameEnum.fireExt.title,
                   pagepush: PageNameEnum.fireExt.page,
-                  backGroundColor: Colors.red,
+                  backGroundColor: Colors.orange,
                   textColor: Colors.white,
                   icon: PageNameEnum.fireExt.icon,
                 ),
                 _PagePushCard(
                   title: PageNameEnum.alarmEquip.title,
                   pagepush: PageNameEnum.alarmEquip.page,
-                  backGroundColor: Colors.red,
+                  backGroundColor: Colors.orange,
                   textColor: Colors.white,
                   icon: PageNameEnum.alarmEquip.icon,
                 ),

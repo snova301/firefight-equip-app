@@ -1,5 +1,6 @@
 // import 'package:elec_facility_calc/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/notifiers/leakage_alarm_require_notifier.dart';
 import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/dropdown_fire_prevent_property_widget.dart';
 import 'package:firefight_equip/src/view/widgets/input_text_card_widget.dart';
@@ -7,19 +8,19 @@ import 'package:firefight_equip/src/view/widgets/output_text_widget.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:firefight_equip/src/view/widgets/run_button_widget.dart';
 import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
-import 'package:firefight_equip/src/notifiers/fire_ext_require_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// 消火器具設置義務計算ページ
-class FireExtRequirePage extends ConsumerStatefulWidget {
-  const FireExtRequirePage({Key? key}) : super(key: key);
+class LeakageAlarmRequirePage extends ConsumerStatefulWidget {
+  const LeakageAlarmRequirePage({Key? key}) : super(key: key);
 
   @override
-  FireExtRequirePageState createState() => FireExtRequirePageState();
+  LeakageAlarmRequirePageState createState() => LeakageAlarmRequirePageState();
 }
 
-class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
+class LeakageAlarmRequirePageState
+    extends ConsumerState<LeakageAlarmRequirePage> {
   @override
   Widget build(BuildContext context) {
     /// 画面情報取得
@@ -40,7 +41,7 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(PageNameEnum.fireExtRequire.title),
+          title: Text(PageNameEnum.leakageAlarmRequire.title),
         ),
         body: Row(
           children: [
@@ -59,60 +60,58 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 防火対象物の選択
                   FirePreventPropertySelectDD(
                     value: ref
-                        .watch(fireExtRequireProvider)
+                        .watch(leakageAlarmRequireProvider)
                         .firePreventProperty
                         .title,
                     func: (FirePreventPropertyEnum value) {
                       ref
-                          .read(fireExtRequireProvider.notifier)
+                          .read(leakageAlarmRequireProvider.notifier)
                           .updateFirePreventProperty(value);
                     },
                   ),
 
-                  /// 面積入力
+                  /// 延べ面積入力
+                  /// 16項イを選択しているときは地階の床面積を入力
                   InputTextCard(
-                    title: ref.watch(fireExtRequireProvider).isNoWindow
-                        ? '床面積(整数のみ)' // 地階、無窓階、3F以上の階は床面積で判断
-                        : '延べ面積(整数のみ)',
+                    title: '延べ面積(整数のみ)',
                     unit: 'm2',
                     message: '整数のみ',
-                    controller: ref.watch(fireExtReqSqTxtCtrlProvider),
+                    controller: ref.watch(leakageAlarmReqSqTxtCtrlProvider),
                     func: (String value) {
-                      ref.read(fireExtRequireProvider.notifier).updateSq(value);
+                      ref
+                          .read(leakageAlarmRequireProvider.notifier)
+                          .updateSq(value);
                     },
                   ),
 
-                  /// 地階、無窓階、3F以上のチェックボックス
-                  CheckBoxCard(
-                    title: '地階、無窓階、3F以上',
-                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
-                    func: (bool newBool) {
-                      ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsNoWindow(newBool);
-                    },
-                  ),
+                  /// 床面積入力
+                  /// 条件に一致すると表示される
+                  ref.watch(leakageAlarmRequireProvider).firePreventProperty ==
+                          FirePreventPropertyEnum.no16I
+                      ? InputTextCard(
+                          title: '特定用途部分の床面積(整数のみ)',
+                          unit: 'm2',
+                          message: '整数のみ',
+                          controller:
+                              ref.watch(leakageAlarmReqSqFloorTxtCtrlProvider),
+                          func: (String value) {
+                            ref
+                                .read(leakageAlarmRequireProvider.notifier)
+                                .updateSqFloor(value);
+                          },
+                        )
+                      : Container(),
 
-                  /// 少量危険物のチェックボックス
+                  /// 最大契約電流50A以上のチェックボックス
                   CheckBoxCard(
-                    title: '少量危険物、指定可燃物',
-                    isChecked: ref.watch(fireExtRequireProvider).isCombust,
+                    title: '最大契約電流が50A以上',
+                    isChecked: ref
+                        .watch(leakageAlarmRequireProvider)
+                        .isContractCurrent,
                     func: (bool newBool) {
                       ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsCombust(newBool);
-                    },
-                  ),
-
-                  /// 火を使用する器具のチェックボックス
-                  /// 3項の判断に使用
-                  CheckBoxCard(
-                    title: '火を使用する器具を設置',
-                    isChecked: ref.watch(fireExtRequireProvider).isUsedFire,
-                    func: (bool newBool) {
-                      ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsUsedFire(newBool);
+                          .read(leakageAlarmRequireProvider.notifier)
+                          .updateIsContractCurrent(newBool);
                     },
                   ),
 
@@ -120,12 +119,20 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   RunButton(
                     // paddingSize: blockWidth,
                     func: () {
+                      /// TextEditingControllerのデータをproviderへ渡す
                       final sqTxtCtrl =
-                          ref.read(fireExtReqSqTxtCtrlProvider).text;
+                          ref.read(leakageAlarmReqSqTxtCtrlProvider).text;
+                      final sqFloorTxtCtrl =
+                          ref.read(leakageAlarmReqSqFloorTxtCtrlProvider).text;
                       ref
-                          .read(fireExtRequireProvider.notifier)
+                          .read(leakageAlarmRequireProvider.notifier)
                           .updateSq(sqTxtCtrl);
-                      ref.read(fireExtRequireProvider.notifier).run();
+                      ref
+                          .read(leakageAlarmRequireProvider.notifier)
+                          .updateSqFloor(sqFloorTxtCtrl);
+
+                      /// 計算実行
+                      ref.read(leakageAlarmRequireProvider.notifier).run();
                     },
                   ),
 
@@ -137,12 +144,12 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
 
                   /// 結果表示
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).result,
+                    result: ref.watch(leakageAlarmRequireProvider).result,
                   ),
 
                   /// 理由表示
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).reason,
+                    result: ref.watch(leakageAlarmRequireProvider).reason,
                     resultFontColor: Colors.grey,
                     resultFontSize: 12,
                   ),

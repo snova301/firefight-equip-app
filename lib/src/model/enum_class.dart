@@ -1,3 +1,4 @@
+import 'package:firefight_equip/src/view/pages/leakage_alarm_require_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firefight_equip/src/view/pages/alarm_equip_select_page.dart';
 import 'package:firefight_equip/src/view/pages/fire_alarm_require_page.dart';
@@ -18,6 +19,7 @@ enum PageNameEnum {
   alarmEquip('警報設備計算', SelectFireAlarmPage(), Icons.alarm),
   fireAlarmRequire('自動火災警報設備 設置基準計算', FireAlarmRequirePage(), null),
   gasAlarmRequire('ガス漏れ警報設備 設置基準計算', GasAlarmRequirePage(), null),
+  leakageAlarmRequire('漏電火災警報器 設置基準計算', LeakageAlarmRequirePage(), null),
   setting('設定', SettingPage(), Icons.settings),
   about('About', AboutPage(), Icons.info_outline);
 
