@@ -3,7 +3,7 @@ import 'package:firefight_equip/src/model/fire_ext_require_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 配線リスト入力のProviderの定義
+/// 消火器設置義務判定のProviderの定義
 final fireExtRequireProvider =
     StateNotifierProvider<FireExtRequireNotifier, FireExtRequireClass>((ref) {
   return FireExtRequireNotifier();
@@ -118,7 +118,8 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
         // 3項の火を使用する設備を使わない場合
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
-            !isUsedFire) {
+            !isUsedFire &&
+            sq >= 150) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state =
           state.copyWith(reason: '※ 火を使用する器具が設置されているため、延べ面積150m2以上で消火器具の設置が義務');

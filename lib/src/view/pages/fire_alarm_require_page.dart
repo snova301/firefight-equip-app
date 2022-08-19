@@ -201,9 +201,15 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                       /// TextEditingControllerのデータをproviderへ渡す
                       final sqTxtCtrl =
                           ref.read(fireAlarmReqSqTxtCtrlProvider).text;
+                      final sqFloorTxtCtrl =
+                          ref.read(fireAlarmReqSqFloorTxtCtrlProvider).text;
+
                       ref
                           .read(fireAlarmRequireProvider.notifier)
                           .updateSq(sqTxtCtrl);
+                      ref
+                          .read(fireAlarmRequireProvider.notifier)
+                          .updateSqFloor(sqFloorTxtCtrl);
 
                       /// 計算実行
                       ref.read(fireAlarmRequireProvider.notifier).run();
@@ -218,13 +224,14 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
 
                   /// 結果表示
                   OutputText(
-                    preface: '消火器の',
                     result: ref.watch(fireAlarmRequireProvider).result,
                   ),
 
+                  /// 理由表示
                   OutputText(
-                    preface: ref.watch(fireAlarmRequireProvider).reason,
-                    prefaceFontSize: 12,
+                    result: ref.watch(fireAlarmRequireProvider).reason,
+                    resultFontColor: Colors.grey,
+                    resultFontSize: 12,
                   ),
                 ],
               ),

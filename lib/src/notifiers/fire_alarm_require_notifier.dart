@@ -3,7 +3,7 @@ import 'package:firefight_equip/src/model/fire_alarm_require_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 配線リスト入力のProviderの定義
+/// 自火報設置義務判定のProviderの定義
 final fireAlarmRequireProvider =
     StateNotifierProvider<FireAlarmRequireNotifier, FireAlarmRequireClass>(
         (ref) {

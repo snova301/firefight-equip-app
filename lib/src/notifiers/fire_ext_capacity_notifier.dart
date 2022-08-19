@@ -3,7 +3,7 @@ import 'package:firefight_equip/src/model/fire_ext_capacity_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 配線リスト入力のProviderの定義
+/// 消火器能力単位計算のProviderの定義
 final fireExtCapacityProvider =
     StateNotifierProvider<FireExtCapacityNotifier, FireExtCapacityClass>((ref) {
   return FireExtCapacityNotifier();

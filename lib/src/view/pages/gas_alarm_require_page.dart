@@ -1,5 +1,6 @@
 // import 'package:elec_facility_calc/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/notifiers/gas_alarm_require_notifier.dart';
 import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/dropdown_fire_prevent_property_widget.dart';
 import 'package:firefight_equip/src/view/widgets/input_text_card_widget.dart';
@@ -7,19 +8,18 @@ import 'package:firefight_equip/src/view/widgets/output_text_widget.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:firefight_equip/src/view/widgets/run_button_widget.dart';
 import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
-import 'package:firefight_equip/src/notifiers/fire_ext_require_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// 消火器具設置義務計算ページ
-class FireExtRequirePage extends ConsumerStatefulWidget {
-  const FireExtRequirePage({Key? key}) : super(key: key);
+class GasAlarmRequirePage extends ConsumerStatefulWidget {
+  const GasAlarmRequirePage({Key? key}) : super(key: key);
 
   @override
-  FireExtRequirePageState createState() => FireExtRequirePageState();
+  GasAlarmRequirePageState createState() => GasAlarmRequirePageState();
 }
 
-class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
+class GasAlarmRequirePageState extends ConsumerState<GasAlarmRequirePage> {
   @override
   Widget build(BuildContext context) {
     /// 画面情報取得
@@ -40,7 +40,7 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(PageNameEnum.fireExtRequire.title),
+          title: Text(PageNameEnum.gasAlarmRequire.title),
         ),
         body: Row(
           children: [
@@ -59,60 +59,74 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   /// 防火対象物の選択
                   FirePreventPropertySelectDD(
                     value: ref
-                        .watch(fireExtRequireProvider)
+                        .watch(gasAlarmRequireProvider)
                         .firePreventProperty
                         .title,
                     func: (FirePreventPropertyEnum value) {
                       ref
-                          .read(fireExtRequireProvider.notifier)
+                          .read(gasAlarmRequireProvider.notifier)
                           .updateFirePreventProperty(value);
                     },
                   ),
 
-                  /// 面積入力
+                  /// 延べ面積入力
+                  /// 16項イと地階のチェックボックスを選択しているときは地階の床面積を入力
                   InputTextCard(
-                    title: ref.watch(fireExtRequireProvider).isNoWindow
-                        ? '床面積(整数のみ)' // 地階、無窓階、3F以上の階は床面積で判断
+                    title: ref
+                                    .watch(gasAlarmRequireProvider)
+                                    .firePreventProperty ==
+                                FirePreventPropertyEnum.no16I &&
+                            ref.watch(gasAlarmRequireProvider).isUnderGround
+                        ? '地階の床面積(整数のみ)'
                         : '延べ面積(整数のみ)',
                     unit: 'm2',
                     message: '整数のみ',
-                    controller: ref.watch(fireExtReqSqTxtCtrlProvider),
+                    controller: ref.watch(gasAlarmReqSqTxtCtrlProvider),
                     func: (String value) {
-                      ref.read(fireExtRequireProvider.notifier).updateSq(value);
+                      ref
+                          .read(gasAlarmRequireProvider.notifier)
+                          .updateSq(value);
                     },
                   ),
 
-                  /// 地階、無窓階、3F以上のチェックボックス
+                  /// 床面積入力
+                  /// 条件に一致すると表示される
+                  ref.watch(gasAlarmRequireProvider).firePreventProperty ==
+                              FirePreventPropertyEnum.no16No3 ||
+                          ref.watch(gasAlarmRequireProvider).isUnderGround
+                      ? InputTextCard(
+                          title: '特定用途部分の床面積(整数のみ)',
+                          unit: 'm2',
+                          message: '整数のみ',
+                          controller:
+                              ref.watch(gasAlarmReqSqFloorTxtCtrlProvider),
+                          func: (String value) {
+                            ref
+                                .read(gasAlarmRequireProvider.notifier)
+                                .updateSqFloor(value);
+                          },
+                        )
+                      : Container(),
+
+                  /// 温泉施設のチェックボックス
                   CheckBoxCard(
-                    title: '地階、無窓階、3F以上',
-                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    title: '温泉施設',
+                    isChecked: ref.watch(gasAlarmRequireProvider).isHotSpring,
                     func: (bool newBool) {
                       ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsNoWindow(newBool);
+                          .read(gasAlarmRequireProvider.notifier)
+                          .updateIsHotSpring(newBool);
                     },
                   ),
 
-                  /// 少量危険物のチェックボックス
+                  /// 地階のチェックボックス
                   CheckBoxCard(
-                    title: '少量危険物、指定可燃物',
-                    isChecked: ref.watch(fireExtRequireProvider).isCombust,
+                    title: '地階',
+                    isChecked: ref.watch(gasAlarmRequireProvider).isUnderGround,
                     func: (bool newBool) {
                       ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsCombust(newBool);
-                    },
-                  ),
-
-                  /// 火を使用する器具のチェックボックス
-                  /// 3項の判断に使用
-                  CheckBoxCard(
-                    title: '火を使用する器具を設置',
-                    isChecked: ref.watch(fireExtRequireProvider).isUsedFire,
-                    func: (bool newBool) {
-                      ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsUsedFire(newBool);
+                          .read(gasAlarmRequireProvider.notifier)
+                          .updateIsUnderGround(newBool);
                     },
                   ),
 
@@ -120,12 +134,20 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                   RunButton(
                     // paddingSize: blockWidth,
                     func: () {
+                      /// TextEditingControllerのデータをproviderへ渡す
                       final sqTxtCtrl =
-                          ref.read(fireExtReqSqTxtCtrlProvider).text;
+                          ref.read(gasAlarmReqSqTxtCtrlProvider).text;
+                      final sqFloorTxtCtrl =
+                          ref.read(gasAlarmReqSqFloorTxtCtrlProvider).text;
                       ref
-                          .read(fireExtRequireProvider.notifier)
+                          .read(gasAlarmRequireProvider.notifier)
                           .updateSq(sqTxtCtrl);
-                      ref.read(fireExtRequireProvider.notifier).run();
+                      ref
+                          .read(gasAlarmRequireProvider.notifier)
+                          .updateSqFloor(sqFloorTxtCtrl);
+
+                      /// 計算実行
+                      ref.read(gasAlarmRequireProvider.notifier).run();
                     },
                   ),
 
@@ -137,35 +159,15 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
 
                   /// 結果表示
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).result,
+                    result: ref.watch(gasAlarmRequireProvider).result,
                   ),
-                  // Text(
-                  //   ref.watch(fireExtRequireProvider).result,
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //     fontSize: 18,
-                  //     color: Colors.red,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  //   overflow: TextOverflow.clip,
-                  // ),
 
                   /// 理由表示
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).reason,
+                    result: ref.watch(gasAlarmRequireProvider).reason,
                     resultFontColor: Colors.grey,
                     resultFontSize: 12,
                   ),
-                  // Text(
-                  //   ref.watch(fireExtRequireProvider).reason,
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //     fontSize: 12,
-                  //     color: Colors.grey,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  //   overflow: TextOverflow.clip,
-                  // ),
                 ],
               ),
             ),
