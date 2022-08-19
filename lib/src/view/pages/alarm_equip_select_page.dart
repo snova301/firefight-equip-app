@@ -43,6 +43,10 @@ class SelectFireAlarmPage extends ConsumerWidget {
                   title: PageNameEnum.leakageAlarmRequire.title,
                   pagepush: PageNameEnum.leakageAlarmRequire.page,
                 ),
+                PagePushButton(
+                  title: PageNameEnum.fireReportRequire.title,
+                  pagepush: PageNameEnum.fireReportRequire.page,
+                ),
               ],
             ),
           ),
