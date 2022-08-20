@@ -108,6 +108,28 @@ class DrawerContentsListTile extends ConsumerWidget {
           },
         ),
 
+        /// 法令表示画面
+        ListTile(
+          title: Text(
+            PageNameEnum.showLaw.title,
+            style: TextStyle(fontSize: fontSize),
+          ),
+          leading: Icon(PageNameEnum.showLaw.icon),
+          onTap: () {
+            /// ページ遷移のanalytics
+            AnalyticsService().logPage(PageNameEnum.showLaw.title);
+
+            /// ページプッシュしてもとのページを削除
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PageNameEnum.showLaw.page,
+              ),
+              (route) => false,
+            );
+          },
+        ),
+
         /// 設定画面へ
         ListTile(
           title: Text(

@@ -47,6 +47,11 @@ class MyHomePage extends ConsumerWidget {
                   icon: PageNameEnum.alarmEquip.icon,
                 ),
                 _PagePushCard(
+                  title: PageNameEnum.showLaw.title,
+                  pagepush: PageNameEnum.showLaw.page,
+                  icon: PageNameEnum.showLaw.icon,
+                ),
+                _PagePushCard(
                   title: PageNameEnum.setting.title,
                   pagepush: PageNameEnum.setting.page,
                   icon: PageNameEnum.setting.icon,

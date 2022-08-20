@@ -36,6 +36,39 @@ class AnalyticsService {
   }
 }
 
+/// アプリ情報を載せたページへのリンク
+class LinkCard extends StatelessWidget {
+  final String urlTitle;
+  final bool isSubtitle;
+  final String urlName;
+
+  const LinkCard({
+    Key? key,
+    required this.urlTitle,
+    required this.urlName,
+    this.isSubtitle = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(urlTitle),
+        subtitle: isSubtitle ? Text('$urlTitleのwebページへ移動します。') : null,
+        contentPadding: const EdgeInsets.all(10),
+        onTap: () {
+          /// ページ遷移のanalytics
+          AnalyticsService().logPage(urlTitle);
+
+          /// 開く
+          openUrl(urlName);
+        },
+        trailing: const Icon(Icons.open_in_browser),
+      ),
+    );
+  }
+}
+
 /// URLを開く関数
 void openUrl(urlname) async {
   final Uri url = Uri.parse(urlname);

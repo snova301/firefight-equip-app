@@ -17,31 +17,32 @@ class AboutPage extends StatelessWidget {
         children: <Widget>[
           /// 各URLをオープン
           /// 使い方ページ
-          const _LinkCard(
+          const LinkCard(
             urlTitle: '使い方',
-            urlName: 'elec_calculator/howtouse.html',
+            isSubtitle: true,
+            urlName:
+                'https://snova301.github.io/AppService/elec_calculator/howtouse.html',
           ),
 
           /// 利用規約ページ
-          const _LinkCard(
+          const LinkCard(
             urlTitle: '利用規約',
-            urlName: 'common/terms.html',
+            isSubtitle: true,
+            urlName: 'https://snova301.github.io/AppService/common/terms.html',
           ),
 
           /// プライバシーポリシーページ
-          const _LinkCard(
+          const LinkCard(
             urlTitle: 'プライバシーポリシー',
-            urlName: 'common/privacypolicy.html',
+            isSubtitle: true,
+            urlName:
+                'https://snova301.github.io/AppService/common/privacypolicy.html',
           ),
 
           /// お問い合わせフォーム
-          Card(
-            child: ListTile(
-              title: const Text('お問い合わせ'),
-              contentPadding: const EdgeInsets.all(10),
-              onTap: () => openUrl('https://forms.gle/yBGDikXqZzWjco7z8'),
-              trailing: const Icon(Icons.open_in_browser),
-            ),
+          const LinkCard(
+            urlTitle: 'お問い合わせ',
+            urlName: 'https://forms.gle/yBGDikXqZzWjco7z8',
           ),
 
           /// 支援サイト
@@ -68,28 +69,6 @@ class AboutPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// アプリ情報を載せたページへのリンク
-class _LinkCard extends StatelessWidget {
-  final String urlTitle;
-  final String urlName;
-
-  const _LinkCard({Key? key, required this.urlTitle, required this.urlName})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(urlTitle),
-        subtitle: Text('$urlTitleのwebページへ移動します。'),
-        contentPadding: const EdgeInsets.all(10),
-        onTap: () => openUrl('https://snova301.github.io/AppService/$urlName'),
-        trailing: const Icon(Icons.open_in_browser),
       ),
     );
   }
