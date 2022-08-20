@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// 実行ボタンのWidget
 class RunButton extends ConsumerWidget {
   final Function() func;
+  final String title;
 
   const RunButton({
     Key? key,
     required this.func,
+    this.title = '計算実行',
   }) : super(key: key);
 
   @override
@@ -26,9 +28,9 @@ class RunButton extends ConsumerWidget {
             const EdgeInsets.fromLTRB(30, 20, 30, 20),
           ),
         ),
-        child: const Text(
-          '計算実行',
-          style: TextStyle(
+        child: Text(
+          title,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),

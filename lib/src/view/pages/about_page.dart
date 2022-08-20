@@ -8,12 +8,18 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// 画面情報
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(PageNameEnum.about.title),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(8),
+        padding:
+            EdgeInsets.fromLTRB(screenWidth / 10, 40, screenWidth / 10, 20),
+        //  const EdgeInsets.all(8),
+
         children: <Widget>[
           /// 各URLをオープン
           /// 使い方ページ

@@ -39,19 +39,22 @@ class AnalyticsService {
 /// アプリ情報を載せたページへのリンク
 class LinkCard extends StatelessWidget {
   final String urlTitle;
-  final bool isSubtitle;
   final String urlName;
+  final bool isSubtitle;
+  final Color? cardColor;
 
   const LinkCard({
     Key? key,
     required this.urlTitle,
     required this.urlName,
     this.isSubtitle = false,
+    this.cardColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: cardColor,
       child: ListTile(
         title: Text(urlTitle),
         subtitle: isSubtitle ? Text('$urlTitleのwebページへ移動します。') : null,

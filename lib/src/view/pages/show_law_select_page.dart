@@ -43,16 +43,19 @@ class ShowLawPage extends ConsumerWidget {
                   urlTitle: '消防法',
                   urlName:
                       'https://elaws.e-gov.go.jp/document?lawid=323AC1000000186_20210901_503AC0000000036',
+                  cardColor: Colors.orange,
                 ),
                 const LinkCard(
                   urlTitle: '消防法施行令',
                   urlName:
                       'https://elaws.e-gov.go.jp/document?lawid=336CO0000000037',
+                  cardColor: Colors.orange,
                 ),
                 const LinkCard(
                   urlTitle: '消防法施行規則',
                   urlName:
                       'https://elaws.e-gov.go.jp/document?lawid=336M50000008006',
+                  cardColor: Colors.orange,
                 ),
               ],
             ),

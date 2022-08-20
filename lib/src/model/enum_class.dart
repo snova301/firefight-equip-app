@@ -1,3 +1,4 @@
+import 'package:firefight_equip/src/view/pages/catalog_view_select_page.dart';
 import 'package:firefight_equip/src/view/pages/fire_report_require_page.dart';
 import 'package:firefight_equip/src/view/pages/leakage_alarm_require_page.dart';
 import 'package:firefight_equip/src/view/pages/show_law_select_page.dart';
@@ -23,6 +24,7 @@ enum PageNameEnum {
   gasAlarmRequire('ガス漏れ警報設備 設置基準計算', GasAlarmRequirePage(), null),
   leakageAlarmRequire('漏電火災警報器 設置基準計算', LeakageAlarmRequirePage(), null),
   fireReportRequire('火災通報装置 設置基準計算', FireReportRequirePage(), null),
+  catalogList('カタログリスト', CatalogListPage(), null),
   showLaw('法令の表示', ShowLawPage(), Icons.library_books),
   setting('設定', SettingPage(), Icons.settings),
   about('About', AboutPage(), Icons.info_outline);
