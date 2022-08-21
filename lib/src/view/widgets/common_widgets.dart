@@ -3,6 +3,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// snackbarで注意喚起を行うWidget
+///
+/// 使い方
+/// SnackBarAlert(context: context).snackbar('これ以上追加できません');
 class SnackBarAlert {
   final BuildContext context;
   SnackBarAlert({Key? key, required this.context}) : super();

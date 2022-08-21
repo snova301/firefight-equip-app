@@ -1,6 +1,7 @@
 // import 'package:elec_facility_calc/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/notifiers/leakage_alarm_require_notifier.dart';
+import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
 import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/dropdown_fire_prevent_property_widget.dart';
 import 'package:firefight_equip/src/view/widgets/input_text_card_widget.dart';
@@ -35,7 +36,7 @@ class LeakageAlarmRequirePageState
     // AdsSettingsClass().initElecPowerRec();
 
     /// shared_prefのデータ保存用非同期providerの読み込み
-    // ref.watch(elecPowerSPSetProvider);
+    ref.watch(leakageAlarmRequireSPSetProvider);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),

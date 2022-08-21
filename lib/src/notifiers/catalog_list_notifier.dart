@@ -21,6 +21,11 @@ class CatalogListNotifier extends StateNotifier<List<CatalogListClass>> {
     state = [...state, catalog];
   }
 
+  /// 全更新
+  void updateCatalog(List<CatalogListClass> catalogList) {
+    state = [...catalogList];
+  }
+
   /// 削除
   void removeCatalog(int index) {
     List<CatalogListClass> catalogList = state;

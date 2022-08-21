@@ -1,5 +1,6 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/notifiers/catalog_list_notifier.dart';
+import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
 import 'package:firefight_equip/src/view/pages/catalog_create_page.dart';
 import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 import 'package:firefight_equip/src/view/widgets/drawer_contents_widget.dart';
@@ -17,6 +18,12 @@ class CatalogListPage extends ConsumerWidget {
 
     /// レスポンシブ設定
     bool isDrawerFixed = checkResponsive(screenWidth);
+
+    /// 広告の初期化
+    // AdsSettingsClass().initElecPowerRec();
+
+    /// shared_prefのデータ保存用非同期providerの読み込み
+    ref.watch(catalogListSPSetProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -84,6 +91,9 @@ class _CardListTile extends ConsumerWidget {
           onPressed: () {
             openUrl(catalogList[index].url);
           },
+          style: const ButtonStyle(
+            alignment: Alignment.centerLeft,
+          ),
           child: Text(
             catalogList[index].url,
           ),
