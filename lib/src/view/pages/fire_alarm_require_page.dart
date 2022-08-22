@@ -84,6 +84,44 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                     },
                   ),
 
+                  /// 階の選択
+                  const Text('階の選択'),
+                  DDButton(
+                    value: ref.watch(fireAlarmRequireProvider).floor,
+                    list:
+                        FireAlarmFloorEnum.values.map((e) => e.title).toList(),
+                    func: ((newVal) {
+                      ref
+                          .read(fireAlarmRequireProvider.notifier)
+                          .updateFloor(newVal);
+                    }),
+                  ),
+
+                  /// その階の用途の選択
+                  const Text('階の用途'),
+                  DDButton(
+                    value: ref.watch(fireAlarmRequireProvider).usedType,
+                    list: FireAlarmUsedTypeEnum.values
+                        .map((e) => e.title)
+                        .toList(),
+                    func: ((newVal) {
+                      ref
+                          .read(fireAlarmRequireProvider.notifier)
+                          .updateUsedType(newVal);
+                    }),
+                  ),
+
+                  /// 無窓階のチェックボックス
+                  CheckBoxCard(
+                    title: '無窓階',
+                    isChecked: ref.watch(fireAlarmRequireProvider).isNoWindow,
+                    func: (bool newBool) {
+                      ref
+                          .read(fireAlarmRequireProvider.notifier)
+                          .updateIsNoWindow(newBool);
+                    },
+                  ),
+
                   /// 床面積入力
                   /// 条件に一致すると表示される
                   ref.watch(fireAlarmRequireProvider).firePreventProperty ==
@@ -110,17 +148,6 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                           },
                         )
                       : Container(),
-
-                  /// 無窓階のチェックボックス
-                  CheckBoxCard(
-                    title: '無窓階',
-                    isChecked: ref.watch(fireAlarmRequireProvider).isNoWindow,
-                    func: (bool newBool) {
-                      ref
-                          .read(fireAlarmRequireProvider.notifier)
-                          .updateIsNoWindow(newBool);
-                    },
-                  ),
 
                   /// 指定可燃物のチェックボックス
                   CheckBoxCard(
@@ -166,33 +193,6 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                           .read(fireAlarmRequireProvider.notifier)
                           .updateIsOneStairs(newBool);
                     },
-                  ),
-
-                  /// 階の選択
-                  const Text('階の選択'),
-                  DDButton(
-                    value: ref.watch(fireAlarmRequireProvider).floor,
-                    list:
-                        FireAlarmFloorEnum.values.map((e) => e.title).toList(),
-                    func: ((newVal) {
-                      ref
-                          .read(fireAlarmRequireProvider.notifier)
-                          .updateFloor(newVal);
-                    }),
-                  ),
-
-                  /// その階の用途の選択
-                  const Text('階の用途'),
-                  DDButton(
-                    value: ref.watch(fireAlarmRequireProvider).usedType,
-                    list: FireAlarmUsedTypeEnum.values
-                        .map((e) => e.title)
-                        .toList(),
-                    func: ((newVal) {
-                      ref
-                          .read(fireAlarmRequireProvider.notifier)
-                          .updateUsedType(newVal);
-                    }),
                   ),
 
                   /// 計算実行ボタン

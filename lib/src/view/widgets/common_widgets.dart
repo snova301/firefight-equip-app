@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 ///
 /// 使い方
 /// SnackBarAlert(context: context).snackbar('これ以上追加できません');
-class SnackBarAlert {
+class SnackBarAlertClass {
   final BuildContext context;
-  SnackBarAlert({Key? key, required this.context}) : super();
+  SnackBarAlertClass({Key? key, required this.context}) : super();
 
   void snackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -21,6 +21,37 @@ class SnackBarAlert {
           borderRadius: BorderRadius.circular(10.0),
         ),
         duration: const Duration(milliseconds: 2000),
+      ),
+    );
+  }
+}
+
+/// dialogの表示
+class AlertDialogClass {
+  final BuildContext context;
+  AlertDialogClass({Key? key, required this.context}) : super();
+
+  void showAlertDialog(String title, String content, Function() onOkPressed) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, 'Cancel');
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              onOkPressed();
+              Navigator.pop(context, 'OK');
+            },
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
@@ -45,44 +76,66 @@ class LinkCard extends StatelessWidget {
   final String urlName;
   final bool isSubtitle;
   final Color? cardColor;
+  final Color? fontColor;
 
-  const LinkCard({
-    Key? key,
-    required this.urlTitle,
-    required this.urlName,
-    this.isSubtitle = false,
-    this.cardColor,
-  }) : super(key: key);
+  const LinkCard(
+      {Key? key,
+      required this.urlTitle,
+      required this.urlName,
+      this.isSubtitle = false,
+      this.cardColor,
+      this.fontColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: cardColor,
       child: ListTile(
-        title: Text(urlTitle),
-        subtitle: isSubtitle ? Text('$urlTitleのwebページへ移動します。') : null,
+        title: Text(
+          urlTitle,
+          style: TextStyle(
+            color: fontColor,
+          ),
+        ),
+        subtitle: isSubtitle
+            ? Text(
+                '$urlTitleのwebページへ移動します。',
+                style: TextStyle(
+                  color: fontColor,
+                ),
+              )
+            : null,
         contentPadding: const EdgeInsets.all(10),
         onTap: () {
           /// ページ遷移のanalytics
           AnalyticsService().logPage(urlTitle);
 
           /// 開く
-          openUrl(urlName);
+          openUrlwSnackbar(urlName, context);
         },
-        trailing: const Icon(Icons.open_in_browser),
+        trailing: Icon(
+          Icons.open_in_browser,
+          color: fontColor,
+        ),
       ),
     );
   }
 }
 
 /// URLを開く関数
-void openUrl(urlname) async {
-  final Uri url = Uri.parse(urlname);
-  try {
-    await launchUrl(url, mode: LaunchMode.externalApplication);
-  } catch (e) {
-    throw 'Could not launch $url';
-  }
-  // if (!await launchUrl(url, mode: LaunchMode.externalApplication))
+/// 失敗した場合、snackbarで警告
+void openUrlwSnackbar(String urlname, BuildContext context) async {
+  // final Uri url = Uri.parse(urlname);
+  // try {
+  //   await launchUrl(url, mode: LaunchMode.externalApplication);
+  // } catch (e) {
   //   throw 'Could not launch $url';
+  // }
+  var url = Uri.parse(urlname);
+  if (await canLaunchUrl(url)) {
+    launchUrl(url);
+  } else {
+    SnackBarAlertClass(context: context).snackbar('URLが無効です');
+  }
 }

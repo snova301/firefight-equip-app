@@ -24,8 +24,8 @@ enum PageNameEnum {
   gasAlarmRequire('ガス漏れ警報設備 設置基準計算', GasAlarmRequirePage(), null),
   leakageAlarmRequire('漏電火災警報器 設置基準計算', LeakageAlarmRequirePage(), null),
   fireReportRequire('火災通報装置 設置基準計算', FireReportRequirePage(), null),
-  catalogList('カタログリスト', CatalogListPage(), null),
   showLaw('法令の表示', ShowLawPage(), Icons.library_books),
+  catalogList('カタログリスト', CatalogListPage(), Icons.web_rounded),
   setting('設定', SettingPage(), Icons.settings),
   about('About', AboutPage(), Icons.info_outline);
 
@@ -110,7 +110,7 @@ enum FireAlarmUsedTypeEnum {
 
 /// 設置義務があるかどうかの文章
 enum RequireSentenceEnum {
-  none(''),
+  none('-'),
   yes('設置義務があります'),
   no('設置義務はありません'),
   complex('設置義務は当該用途の基準による');

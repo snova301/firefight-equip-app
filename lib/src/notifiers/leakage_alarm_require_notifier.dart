@@ -14,12 +14,12 @@ class LeakageAlarmRequireNotifier
     extends StateNotifier<LeakageAlarmRequireClass> {
   // 空のデータとして初期化
   LeakageAlarmRequireNotifier()
-      : super(const LeakageAlarmRequireClass(
+      : super(LeakageAlarmRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
           sq: 0,
           sqFloor: 0,
           isContractCurrent: false,
-          result: '',
+          result: RequireSentenceEnum.none.title,
           reason: '',
         ));
 
@@ -152,7 +152,7 @@ class LeakageAlarmRequireNotifier
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
-      state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
+      // state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
     }
   }
 }

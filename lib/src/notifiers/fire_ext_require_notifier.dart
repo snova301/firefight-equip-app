@@ -20,7 +20,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
           isCombust: false,
           isUsedFire: false,
           result: RequireSentenceEnum.none.title,
-          reason: '',
+          reason: '-',
         ));
 
   /// 防火対象物の更新
@@ -65,6 +65,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
     if (
         // 延べ面積に関係なく設置義務がある防火対象物
         // 1項イ、2項、6項イ1-3、6項ロ、16の2項、16の3項、17項、20項
+        // 施行令10条1項1号イ
         firePreventProperty == FirePreventPropertyEnum.no1I ||
             firePreventProperty == FirePreventPropertyEnum.no2I ||
             firePreventProperty == FirePreventPropertyEnum.no2Ro ||
@@ -77,25 +78,20 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
             firePreventProperty == FirePreventPropertyEnum.no17 ||
             firePreventProperty == FirePreventPropertyEnum.no20) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
-      state = state.copyWith(reason: '※ 延べ面積に関係なく消火器具の設置が義務');
+      state = state.copyWith(reason: '延べ面積に関係なく消火器具の設置が義務');
     } else if (
         // 延べ面積に関係なく設置義務がある防火対象物
         // 3項の火を使用する設備を使う場合
+        // 施行令10条1項1号ロ
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
             isUsedFire) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
-      state =
-          state.copyWith(reason: '※ 火を使用する器具が設置されているため、延べ面積に関係なく消火器具の設置が義務');
-    } else if (
-        // 延べ面積に関係なく設置義務がある防火対象物
-        // 少量危険物、指定可燃物
-        isCombust) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-      state = state.copyWith(reason: '※ 少量危険物または指定可燃物を貯蔵または取り扱っているため');
+      state = state.copyWith(reason: '火を使用する器具が設置されているため、延べ面積に関係なく消火器具の設置が義務');
     } else if (
         // 延べ面積150m2以上で設置義務がある防火対象物
         // 1項ロ、4項、5項、6項イ4、6項ハ、6項ニ、9項、12項、13項、14項
+        // 施行令10条1項2号イ
         (firePreventProperty == FirePreventPropertyEnum.no1Ro ||
                 firePreventProperty == FirePreventPropertyEnum.no4 ||
                 firePreventProperty == FirePreventPropertyEnum.no5I ||
@@ -112,20 +108,22 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no14) &&
             sq >= 150) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
-      state = state.copyWith(reason: '※ 延べ面積150m2以上で消火器具の設置が義務');
+      state = state.copyWith(reason: '延べ面積150m2以上で消火器具の設置が義務');
     } else if (
         // 延べ面積150m2以上で設置義務がある防火対象物
         // 3項の火を使用する設備を使わない場合
+        // 施行令10条1項2号ロ
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
             !isUsedFire &&
             sq >= 150) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state =
-          state.copyWith(reason: '※ 火を使用する器具が設置されているため、延べ面積150m2以上で消火器具の設置が義務');
+          state.copyWith(reason: '火を使用する器具が設置されているため、延べ面積150m2以上で消火器具の設置が義務');
     } else if (
         // 延べ面積300m2以上で設置義務がある防火対象物
         // 7項、8項、10項、11項、15項
+        // 施行令10条1項3号
         (firePreventProperty == FirePreventPropertyEnum.no7 ||
                 firePreventProperty == FirePreventPropertyEnum.no8 ||
                 firePreventProperty == FirePreventPropertyEnum.no10 ||
@@ -133,22 +131,24 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no15) &&
             sq >= 300) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
-      state = state.copyWith(reason: '※ 延べ面積300m2以上で消火器具の設置が義務');
+      state = state.copyWith(reason: '延べ面積300m2以上で消火器具の設置が義務');
+    } else if (
+        // 延べ面積に関係なく設置義務がある防火対象物
+        // 少量危険物、指定可燃物
+        // 施行令10条1項4号
+        isCombust) {
+      state = state.copyWith(result: RequireSentenceEnum.yes.title);
+      state = state.copyWith(reason: '少量危険物または指定可燃物を貯蔵または取り扱っているため');
     } else if (
         // 床面積50m2以上で設置義務がある防火対象物
         // 地階、無窓階、3F以上の階
+        // 施行令10条1項5号
         isNoWindow && sq >= 50) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
-      state = state.copyWith(reason: '※ 地階、無窓階、3F以上の階は床面積が50m2以上で消火器具の設置が義務');
-    } else if (
-        // 複合用途防火対象物は当該用途の基準による
-        firePreventProperty == FirePreventPropertyEnum.no16I ||
-            firePreventProperty == FirePreventPropertyEnum.no16Ro) {
-      state = state.copyWith(result: RequireSentenceEnum.complex.title);
-      state = state.copyWith(reason: '');
+      state = state.copyWith(reason: '地階、無窓階、3F以上の階は床面積が50m2以上で消火器具の設置が義務');
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
-      state = state.copyWith(reason: 'ただし、市町村条例や危険物施設には注意してください');
+      state = state.copyWith(reason: 'ただし、市町村条例や危険物施設のため、設置義務になる場合があります');
     }
   }
 }

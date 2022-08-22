@@ -130,6 +130,28 @@ class DrawerContentsListTile extends ConsumerWidget {
           },
         ),
 
+        /// 法令表示画面
+        ListTile(
+          title: Text(
+            PageNameEnum.catalogList.title,
+            style: TextStyle(fontSize: fontSize),
+          ),
+          leading: Icon(PageNameEnum.catalogList.icon),
+          onTap: () {
+            /// ページ遷移のanalytics
+            AnalyticsService().logPage(PageNameEnum.catalogList.title);
+
+            /// ページプッシュしてもとのページを削除
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PageNameEnum.catalogList.page,
+              ),
+              (route) => false,
+            );
+          },
+        ),
+
         /// 設定画面へ
         ListTile(
           title: Text(
@@ -163,8 +185,10 @@ class DrawerContentsListTile extends ConsumerWidget {
             /// ページ遷移のanalytics
             AnalyticsService().logPage('計算方法');
 
-            openUrl(
-                'https://snova301.github.io/AppService/elec_calculator/method.html');
+            openUrlwSnackbar(
+              'https://snova301.github.io/AppService/elec_calculator/method.html',
+              context,
+            );
           },
         ),
 

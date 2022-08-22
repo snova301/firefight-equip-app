@@ -2,7 +2,6 @@
 import 'package:firefight_equip/src/notifiers/catalog_list_notifier.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
 import 'package:firefight_equip/src/view/widgets/run_button_widget.dart';
-import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

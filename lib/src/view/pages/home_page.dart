@@ -49,11 +49,15 @@ class MyHomePage extends ConsumerWidget {
                 _PagePushCard(
                   title: PageNameEnum.showLaw.title,
                   pagepush: PageNameEnum.showLaw.page,
+                  backGroundColor: Colors.orange,
+                  textColor: Colors.white,
                   icon: PageNameEnum.showLaw.icon,
                 ),
                 _PagePushCard(
                   title: PageNameEnum.catalogList.title,
                   pagepush: PageNameEnum.catalogList.page,
+                  backGroundColor: Colors.orange,
+                  textColor: Colors.white,
                   icon: PageNameEnum.catalogList.icon,
                 ),
                 _PagePushCard(
@@ -159,8 +163,10 @@ class _AgreementContainer extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () {
-              openUrl(
-                  'https://snova301.github.io/AppService/common/terms.html');
+              openUrlwSnackbar(
+                'https://snova301.github.io/AppService/common/terms.html',
+                context,
+              );
             },
             style: ButtonStyle(
               padding: MaterialStateProperty.all(EdgeInsets.zero),
@@ -179,8 +185,10 @@ class _AgreementContainer extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () {
-              openUrl(
-                  'https://snova301.github.io/AppService/common/privacypolicy.html');
+              openUrlwSnackbar(
+                'https://snova301.github.io/AppService/common/privacypolicy.html',
+                context,
+              );
             },
             style: ButtonStyle(
               padding: MaterialStateProperty.all(EdgeInsets.zero),

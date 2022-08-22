@@ -47,6 +47,7 @@ class PagePushButton extends ConsumerWidget {
             title,
             style: const TextStyle(
               color: Colors.white,
+              // fontWeight: FontWeight.bold,
             ),
           ),
         ),

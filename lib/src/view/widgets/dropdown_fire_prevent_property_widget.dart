@@ -30,6 +30,9 @@ class FirePreventPropertySelectDD extends ConsumerWidget {
 
           /// ドロップダウン
           DropdownButtonFormField(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
             decoration: const InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(

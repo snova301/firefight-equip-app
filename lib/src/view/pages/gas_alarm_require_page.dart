@@ -90,6 +90,17 @@ class GasAlarmRequirePageState extends ConsumerState<GasAlarmRequirePage> {
                     },
                   ),
 
+                  /// 地階のチェックボックス
+                  CheckBoxCard(
+                    title: '地階',
+                    isChecked: ref.watch(gasAlarmRequireProvider).isUnderGround,
+                    func: (bool newBool) {
+                      ref
+                          .read(gasAlarmRequireProvider.notifier)
+                          .updateIsUnderGround(newBool);
+                    },
+                  ),
+
                   /// 床面積入力
                   /// 条件に一致すると表示される
                   ref.watch(gasAlarmRequireProvider).firePreventProperty ==
@@ -117,17 +128,6 @@ class GasAlarmRequirePageState extends ConsumerState<GasAlarmRequirePage> {
                       ref
                           .read(gasAlarmRequireProvider.notifier)
                           .updateIsHotSpring(newBool);
-                    },
-                  ),
-
-                  /// 地階のチェックボックス
-                  CheckBoxCard(
-                    title: '地階',
-                    isChecked: ref.watch(gasAlarmRequireProvider).isUnderGround,
-                    func: (bool newBool) {
-                      ref
-                          .read(gasAlarmRequireProvider.notifier)
-                          .updateIsUnderGround(newBool);
                     },
                   ),
 

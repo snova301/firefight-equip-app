@@ -25,6 +25,9 @@ class CatalogListPage extends ConsumerWidget {
     /// shared_prefのデータ保存用非同期providerの読み込み
     ref.watch(catalogListSPSetProvider);
 
+    /// 個数設定
+    int maxNum = 3;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(PageNameEnum.catalogList.title),
@@ -44,18 +47,29 @@ class CatalogListPage extends ConsumerWidget {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      padding: EdgeInsets.fromLTRB(
-                        screenWidth / 10,
-                        10,
-                        screenWidth / 10,
-                        20,
-                      ),
-                      itemCount: ref.watch(catalogListProvider).length,
-                      itemBuilder: (context, index) {
-                        return _CardListTile(
-                          index: index,
-                        );
-                      }),
+                    padding: EdgeInsets.fromLTRB(
+                      screenWidth / 10,
+                      10,
+                      screenWidth / 10,
+                      20,
+                    ),
+                    itemCount: ref.watch(catalogListProvider).length,
+                    itemBuilder: (context, index) {
+                      return _CardListTile(
+                        index: index,
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    '資料は$maxNum個まで設定できます',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -67,7 +81,7 @@ class CatalogListPage extends ConsumerWidget {
       drawer: const DrawerContents(),
 
       /// 新規作成のFAB
-      floatingActionButton: const _AddFAB(),
+      floatingActionButton: _AddFAB(maxNum: maxNum),
     );
   }
 }
@@ -89,20 +103,27 @@ class _CardListTile extends ConsumerWidget {
         // URL
         subtitle: TextButton(
           onPressed: () {
-            openUrl(catalogList[index].url);
+            // openUrl(catalogList[index].url);
+            openUrlwSnackbar(catalogList[index].url, context);
           },
           style: const ButtonStyle(
             alignment: Alignment.centerLeft,
           ),
           child: Text(
-            catalogList[index].url,
+            'URL : ${catalogList[index].url}',
           ),
         ),
         // 削除ボタン
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
-            ref.read(catalogListProvider.notifier).removeCatalog(index);
+            AlertDialogClass(context: context).showAlertDialog(
+              '確認',
+              '削除しますか？',
+              () {
+                ref.read(catalogListProvider.notifier).removeCatalog(index);
+              },
+            );
           },
         ),
       ),
@@ -113,39 +134,46 @@ class _CardListTile extends ConsumerWidget {
 /// FABのwidget
 /// 新規作成ページへジャンプ
 class _AddFAB extends ConsumerWidget {
-  const _AddFAB({Key? key}) : super(key: key);
+  final int maxNum;
+  const _AddFAB({Key? key, required this.maxNum}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          /// ページ遷移
-          /// 下から上に移動するアニメーション付き
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) {
-                return const CatalogCreatePage();
-              },
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return SlideTransition(
-                  position: animation.drive(
-                    Tween(
-                      begin: const Offset(0.0, 1.0),
-                      end: Offset.zero,
-                    ).chain(
-                      CurveTween(
-                        curve: Curves.easeInOut,
+          /// 個数設定
+          if (ref.read(catalogListProvider).length < maxNum) {
+            /// ページ遷移
+            /// 下から上に移動するアニメーション付き
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return const CatalogCreatePage();
+                },
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return SlideTransition(
+                    position: animation.drive(
+                      Tween(
+                        begin: const Offset(0.0, 1.0),
+                        end: Offset.zero,
+                      ).chain(
+                        CurveTween(
+                          curve: Curves.easeInOut,
+                        ),
                       ),
                     ),
-                  ),
-                  child: child,
-                );
-              },
-            ),
-          );
+                    child: child,
+                  );
+                },
+              ),
+            );
+          } else {
+            /// 上限に到達したら、snackbarで警告
+            SnackBarAlertClass(context: context).snackbar('上限です');
+          }
         });
   }
 }

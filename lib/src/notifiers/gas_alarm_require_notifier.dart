@@ -13,13 +13,13 @@ final gasAlarmRequireProvider =
 class GasAlarmRequireNotifier extends StateNotifier<GasAlarmRequireClass> {
   // 空のデータとして初期化
   GasAlarmRequireNotifier()
-      : super(const GasAlarmRequireClass(
+      : super(GasAlarmRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
           sq: 0,
           sqFloor: 0,
           isHotSpring: false,
           isUnderGround: false,
-          result: '',
+          result: RequireSentenceEnum.none.title,
           reason: '',
         ));
 
@@ -98,7 +98,7 @@ class GasAlarmRequireNotifier extends StateNotifier<GasAlarmRequireClass> {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
-      state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
+      // state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
     }
   }
 }

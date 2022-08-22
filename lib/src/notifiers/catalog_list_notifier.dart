@@ -11,8 +11,15 @@ final catalogListProvider =
 
 /// 配線リスト入力のNotifierの定義
 class CatalogListNotifier extends StateNotifier<List<CatalogListClass>> {
-  // 空のデータとして初期化
-  CatalogListNotifier() : super([]);
+  // 初めての場合、サンプルデータとして初期化
+  CatalogListNotifier()
+      : super([
+          CatalogListClass(
+            id: const Uuid().v4(),
+            title: 'これはサンプルです。タイトルを決めて入力してみましょう。',
+            url: 'https://snova301.github.io/AppService/',
+          )
+        ]);
 
   /// 追加
   void addCatalog(String title, String url) {

@@ -14,12 +14,12 @@ final fireReportRequireProvider =
 class FireReportRequireNotifier extends StateNotifier<FireReportRequireClass> {
   // 空のデータとして初期化
   FireReportRequireNotifier()
-      : super(const FireReportRequireClass(
+      : super(FireReportRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
           sq: 0,
           isDistance: false,
           isAlwaysReport: false,
-          result: '',
+          result: RequireSentenceEnum.none.title,
           reason: '',
         ));
 
@@ -119,7 +119,7 @@ class FireReportRequireNotifier extends StateNotifier<FireReportRequireClass> {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
-      state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
+      // state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
     }
   }
 }
