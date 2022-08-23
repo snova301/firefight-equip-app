@@ -70,11 +70,9 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                     },
                   ),
 
-                  /// 面積入力
+                  /// 延べ面積入力
                   InputTextCard(
-                    title: ref.watch(fireExtRequireProvider).isNoWindow
-                        ? '床面積(整数のみ)' // 地階、無窓階、3F以上の階は床面積で判断
-                        : '延べ面積(整数のみ)',
+                    title: '延べ面積(整数のみ)',
                     unit: 'm2',
                     message: '整数のみ',
                     controller: ref.watch(fireExtReqSqTxtCtrlProvider),
@@ -82,6 +80,23 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                       ref.read(fireExtRequireProvider.notifier).updateSq(value);
                     },
                   ),
+
+                  /// 床面積入力
+                  /// 地階、無窓階、3F以上の階は床面積で判断
+                  ref.watch(fireExtRequireProvider).isNoWindow
+                      ? InputTextCard(
+                          title: '床面積(整数のみ)',
+                          unit: 'm2',
+                          message: '整数のみ',
+                          controller:
+                              ref.watch(fireExtReqSqFloorTxtCtrlProvider),
+                          func: (String value) {
+                            ref
+                                .read(fireExtRequireProvider.notifier)
+                                .updateSqFloor(value);
+                          },
+                        )
+                      : Container(),
 
                   /// 地階、無窓階、3F以上のチェックボックス
                   CheckBoxCard(

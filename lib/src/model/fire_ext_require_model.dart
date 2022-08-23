@@ -10,7 +10,8 @@ class FireExtRequireClass with _$FireExtRequireClass {
   const factory FireExtRequireClass({
     /// 入力
     required FirePreventPropertyEnum firePreventProperty, // 防火対象物種類
-    required int sq, // 面積
+    required int sq, // 延べ面積
+    required int sqFloor, // 床面積
     required bool isNoWindow, // 地階、無窓階、3F以上
     required bool isCombust, // 少量危険物、指定可燃物
     required bool isUsedFire, // 火を使用する器具(防火対象物 3項の判断に使用)

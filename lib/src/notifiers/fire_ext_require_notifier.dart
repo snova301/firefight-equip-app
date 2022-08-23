@@ -9,13 +9,14 @@ final fireExtRequireProvider =
   return FireExtRequireNotifier();
 });
 
-/// 配線リスト入力のNotifierの定義
+/// 消火器設置義務判定のNotifierの定義
 class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
   // 空のデータとして初期化
   FireExtRequireNotifier()
       : super(FireExtRequireClass(
           firePreventProperty: FirePreventPropertyEnum.no1I,
           sq: 0,
+          sqFloor: 0,
           isNoWindow: false,
           isCombust: false,
           isUsedFire: false,
@@ -28,12 +29,21 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
     state = state.copyWith(firePreventProperty: newProperty);
   }
 
-  /// 面積の更新
+  /// 延べ面積の更新
   void updateSq(String newVal) {
     try {
       state = state.copyWith(sq: int.parse(newVal));
     } catch (e) {
       state = state.copyWith(sq: 0);
+    }
+  }
+
+  /// 床面積の更新
+  void updateSqFloor(String newVal) {
+    try {
+      state = state.copyWith(sqFloor: int.parse(newVal));
+    } catch (e) {
+      state = state.copyWith(sqFloor: 0);
     }
   }
 
@@ -56,10 +66,10 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
   void run() {
     /// 読み込み
     final firePreventProperty = state.firePreventProperty;
-    final sq = state.sq;
-    final isNoWindow = state.isNoWindow;
-    final isCombust = state.isCombust;
-    final isUsedFire = state.isUsedFire;
+    // final sq = state.sq;
+    // final isNoWindow = state.isNoWindow;
+    // final isCombust = state.isCombust;
+    // final isUsedFire = state.isUsedFire;
 
     /// 入力条件をもとに判断
     if (
@@ -85,7 +95,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
         // 施行令10条1項1号ロ
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
-            isUsedFire) {
+            state.isUsedFire) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '火を使用する器具が設置されているため、延べ面積に関係なく消火器具の設置が義務');
     } else if (
@@ -106,7 +116,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no13I ||
                 firePreventProperty == FirePreventPropertyEnum.no13Ro ||
                 firePreventProperty == FirePreventPropertyEnum.no14) &&
-            sq >= 150) {
+            state.sq >= 150) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '延べ面積150m2以上で消火器具の設置が義務');
     } else if (
@@ -115,8 +125,8 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
         // 施行令10条1項2号ロ
         (firePreventProperty == FirePreventPropertyEnum.no3I ||
                 firePreventProperty == FirePreventPropertyEnum.no3Ro) &&
-            !isUsedFire &&
-            sq >= 150) {
+            !state.isUsedFire &&
+            state.sq >= 150) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state =
           state.copyWith(reason: '火を使用する器具が設置されているため、延べ面積150m2以上で消火器具の設置が義務');
@@ -129,21 +139,21 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no10 ||
                 firePreventProperty == FirePreventPropertyEnum.no11 ||
                 firePreventProperty == FirePreventPropertyEnum.no15) &&
-            sq >= 300) {
+            state.sq >= 300) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '延べ面積300m2以上で消火器具の設置が義務');
     } else if (
         // 延べ面積に関係なく設置義務がある防火対象物
         // 少量危険物、指定可燃物
         // 施行令10条1項4号
-        isCombust) {
+        state.isCombust) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '少量危険物または指定可燃物を貯蔵または取り扱っているため');
     } else if (
         // 床面積50m2以上で設置義務がある防火対象物
         // 地階、無窓階、3F以上の階
         // 施行令10条1項5号
-        isNoWindow && sq >= 50) {
+        state.isNoWindow && state.sqFloor >= 50) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state = state.copyWith(reason: '地階、無窓階、3F以上の階は床面積が50m2以上で消火器具の設置が義務');
     } else {
@@ -153,8 +163,14 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
   }
 }
 
-/// テキスト入力初期化
+/// 延べ面積入力初期化
 final fireExtReqSqTxtCtrlProvider = StateProvider((ref) {
   String sq = ref.watch(fireExtRequireProvider).sq.toString();
+  return TextEditingController(text: sq);
+});
+
+/// 床面積入力初期化
+final fireExtReqSqFloorTxtCtrlProvider = StateProvider((ref) {
+  String sq = ref.watch(fireExtRequireProvider).sqFloor.toString();
   return TextEditingController(text: sq);
 });

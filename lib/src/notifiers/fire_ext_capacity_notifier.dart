@@ -9,7 +9,7 @@ final fireExtCapacityProvider =
   return FireExtCapacityNotifier();
 });
 
-/// 配線リスト入力のNotifierの定義
+/// 消火器能力単位計算のNotifierの定義
 class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
   // 空のデータとして初期化
   FireExtCapacityNotifier()
