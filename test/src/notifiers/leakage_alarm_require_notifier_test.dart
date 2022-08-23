@@ -1,170 +1,223 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
-import 'package:firefight_equip/src/model/leakage_alarm_require_model.dart';
-import 'package:flutter/material.dart';
+import 'package:firefight_equip/src/notifiers/leakage_alarm_require_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-/// ガス警報器のProviderの定義
-final leakageAlarmRequireProvider = StateNotifierProvider<
-    LeakageAlarmRequireNotifier, LeakageAlarmRequireClass>((ref) {
-  return LeakageAlarmRequireNotifier();
-});
+void main() {
+  group('test test', () {
+    test('Riverpod test', () {
+      /// ProviderContainerの定義
+      final container = ProviderContainer(
+        overrides: [
+          leakageAlarmRequireProvider
+              .overrideWithValue(LeakageAlarmRequireNotifier()),
+        ],
+      );
 
-/// 配線リスト入力のNotifierの定義
-class LeakageAlarmRequireNotifier
-    extends StateNotifier<LeakageAlarmRequireClass> {
-  // 空のデータとして初期化
-  LeakageAlarmRequireNotifier()
-      : super(LeakageAlarmRequireClass(
-          firePreventProperty: FirePreventPropertyEnum.no1I,
-          sq: 0,
-          sqFloor: 0,
-          isContractCurrent: false,
-          result: RequireSentenceEnum.none.title,
-          reason: '',
-        ));
+      /// 初期状態の確認
+      expect(
+        container.read(leakageAlarmRequireProvider).sq,
+        0,
+      );
+      expect(
+        container.read(leakageAlarmRequireProvider).isContractCurrent,
+        false,
+      );
 
-  /// 防火対象物の更新
-  void updateFirePreventProperty(FirePreventPropertyEnum newProperty) {
-    state = state.copyWith(firePreventProperty: newProperty);
-  }
+      /// 値を変更してみる
+      container
+          .read(leakageAlarmRequireProvider.notifier)
+          .updateIsContractCurrent(true);
+      expect(
+        container.read(leakageAlarmRequireProvider).isContractCurrent,
+        true,
+      );
+    });
+  });
 
-  /// 延べ面積の更新
-  void updateSq(String newVal) {
-    try {
-      state = state.copyWith(sq: int.parse(newVal));
-    } catch (e) {
-      state = state.copyWith(sq: 0);
-    }
-  }
+  group('notifier test', () {
+    /// 消防法施行令 第22条の1項の確認
+    test('no21-1', () {
+      /// ProviderContainerの定義
+      final container = ProviderContainer(
+        overrides: [
+          leakageAlarmRequireProvider
+              .overrideWithValue(LeakageAlarmRequireNotifier()),
+        ],
+      );
 
-  /// 床面積の更新
-  void updateSqFloor(String newVal) {
-    try {
-      state = state.copyWith(sqFloor: int.parse(newVal));
-    } catch (e) {
-      state = state.copyWith(sqFloor: 0);
-    }
-  }
+      /// 契約電流のループ
+      [true, false].forEach((isContractCurrent) {
+        container
+            .read(leakageAlarmRequireProvider.notifier)
+            .updateIsContractCurrent(isContractCurrent);
 
-  /// 契約電流50A以上の真偽値の更新
-  void updateIsContractCurrent(bool newBool) {
-    state = state.copyWith(isContractCurrent: newBool);
-  }
+        /// 延べ面積のループ
+        ['0', '150', '300', '500', '1000'].forEach((sq) {
+          container.read(leakageAlarmRequireProvider.notifier).updateSq(sq);
 
-  /// 計算実行
-  /// 消防法施行令第22条より
-  void run() {
-    /// 読み込み
-    final firePreventProperty = state.firePreventProperty;
+          /// 床面積のループ
+          ['0', '300'].forEach((sqFloor) {
+            container
+                .read(leakageAlarmRequireProvider.notifier)
+                .updateSqFloor(sqFloor);
 
-    /// 入力条件をもとに判断
-    if (
-        // 延べ面積に関係なく設置義務
-        // 17項
-        // 施行令22条 1項
-        firePreventProperty == FirePreventPropertyEnum.no17) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else if (
-        // 延べ面積が150m2以上で設置義務
-        // 5項、9項
-        // 施行令22条の2 2項
-        (firePreventProperty == FirePreventPropertyEnum.no5I ||
-                firePreventProperty == FirePreventPropertyEnum.no5Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no9I ||
-                firePreventProperty == FirePreventPropertyEnum.no9Ro) &&
-            state.sq >= 150) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else if (
-        // 延べ面積が300m2以上で設置義務
-        // 1-4項、6項、12項、16の2項
-        // 施行令22条の2 3項
-        (firePreventProperty == FirePreventPropertyEnum.no1I ||
-                firePreventProperty == FirePreventPropertyEnum.no1Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no2I ||
-                firePreventProperty == FirePreventPropertyEnum.no2Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no2Ha ||
-                firePreventProperty == FirePreventPropertyEnum.no2Ni ||
-                firePreventProperty == FirePreventPropertyEnum.no3I ||
-                firePreventProperty == FirePreventPropertyEnum.no3Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no4 ||
-                firePreventProperty == FirePreventPropertyEnum.no6I123 ||
-                firePreventProperty == FirePreventPropertyEnum.no6I4 ||
-                firePreventProperty == FirePreventPropertyEnum.no6Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no6Ha ||
-                firePreventProperty == FirePreventPropertyEnum.no6Ni ||
-                firePreventProperty == FirePreventPropertyEnum.no12I ||
-                firePreventProperty == FirePreventPropertyEnum.no12Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no16No2) &&
-            state.sq >= 300) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else if (
-        // 延べ面積が500m2以上で設置義務
-        // 7項、8項、10項、11項
-        // 施行令22条の2 4項
-        (firePreventProperty == FirePreventPropertyEnum.no7 ||
-                firePreventProperty == FirePreventPropertyEnum.no8 ||
-                firePreventProperty == FirePreventPropertyEnum.no10 ||
-                firePreventProperty == FirePreventPropertyEnum.no11) &&
-            state.sq >= 500) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else if (
-        // 延べ面積が1000m2以上で設置義務
-        // 14項、15項
-        // 施行令22条の2 5項
-        (firePreventProperty == FirePreventPropertyEnum.no14 ||
-                firePreventProperty == FirePreventPropertyEnum.no15) &&
-            state.sq >= 1000) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else if (
-        // 延べ面積が500m2以上で、特定用途の床面積300m2以上で設置義務
-        // 16項イ
-        // 施行令22条の2 6項
-        firePreventProperty == FirePreventPropertyEnum.no16I &&
-            state.sq >= 500 &&
-            state.sqFloor >= 300) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else if (
-        // 最大契約電流が50A以上で設置義務
-        // 1-6項、15項、16項
-        // 施行令22条の2 7項
-        (firePreventProperty == FirePreventPropertyEnum.no1I ||
-                firePreventProperty == FirePreventPropertyEnum.no1Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no2I ||
-                firePreventProperty == FirePreventPropertyEnum.no2Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no2Ha ||
-                firePreventProperty == FirePreventPropertyEnum.no2Ni ||
-                firePreventProperty == FirePreventPropertyEnum.no3I ||
-                firePreventProperty == FirePreventPropertyEnum.no3Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no4 ||
-                firePreventProperty == FirePreventPropertyEnum.no5I ||
-                firePreventProperty == FirePreventPropertyEnum.no5Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no6I123 ||
-                firePreventProperty == FirePreventPropertyEnum.no6I4 ||
-                firePreventProperty == FirePreventPropertyEnum.no6Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no6Ha ||
-                firePreventProperty == FirePreventPropertyEnum.no6Ni ||
-                firePreventProperty == FirePreventPropertyEnum.no15 ||
-                firePreventProperty == FirePreventPropertyEnum.no16I ||
-                firePreventProperty == FirePreventPropertyEnum.no16Ro ||
-                firePreventProperty == FirePreventPropertyEnum.no16No2 ||
-                firePreventProperty == FirePreventPropertyEnum.no16No3) &&
-            state.isContractCurrent) {
-      state = state.copyWith(result: RequireSentenceEnum.yes.title);
-    } else {
-      state = state.copyWith(result: RequireSentenceEnum.no.title);
-      // state = state.copyWith(reason: 'ただし、市町村条例には注意してください');
-    }
-  }
+            /// 防火対象物のループ
+            FirePreventPropertyEnum.values
+                .toList()
+                .forEach((firePreventProperty) {
+              container
+                  .read(leakageAlarmRequireProvider.notifier)
+                  .updateFirePreventProperty(firePreventProperty);
+              // print(firePreventProperty);
+
+              /// 実行
+              container.read(leakageAlarmRequireProvider.notifier).run();
+
+              if (
+                  // 第1号
+                  firePreventProperty == FirePreventPropertyEnum.no17) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else if (
+                  // 第2号
+                  (firePreventProperty == FirePreventPropertyEnum.no5I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no5Ro ||
+                          firePreventProperty == FirePreventPropertyEnum.no9I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no9Ro) &&
+                      container.read(leakageAlarmRequireProvider).sq >= 150) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else if (
+                  // 第3号
+                  (firePreventProperty == FirePreventPropertyEnum.no1I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no1Ro ||
+                          firePreventProperty == FirePreventPropertyEnum.no2I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no2Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no2Ha ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no2Ni ||
+                          firePreventProperty == FirePreventPropertyEnum.no3I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no3Ro ||
+                          firePreventProperty == FirePreventPropertyEnum.no4 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6I123 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6I4 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6Ha ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6Ni ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no12I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no12Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no16No2) &&
+                      container.read(leakageAlarmRequireProvider).sq >= 300) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else if (
+                  // 第4号
+                  (firePreventProperty == FirePreventPropertyEnum.no7 ||
+                          firePreventProperty == FirePreventPropertyEnum.no8 ||
+                          firePreventProperty == FirePreventPropertyEnum.no10 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no11) &&
+                      container.read(leakageAlarmRequireProvider).sq >= 500) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else if (
+                  // 第5号
+                  (firePreventProperty == FirePreventPropertyEnum.no14 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no15) &&
+                      container.read(leakageAlarmRequireProvider).sq >= 1000) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else if (
+                  // 第6号
+                  firePreventProperty == FirePreventPropertyEnum.no16I &&
+                      container.read(leakageAlarmRequireProvider).sq >= 500 &&
+                      container.read(leakageAlarmRequireProvider).sqFloor >=
+                          300) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else if (
+                  // 第7号
+                  (firePreventProperty == FirePreventPropertyEnum.no1I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no1Ro ||
+                          firePreventProperty == FirePreventPropertyEnum.no2I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no2Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no2Ha ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no2Ni ||
+                          firePreventProperty == FirePreventPropertyEnum.no3I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no3Ro ||
+                          firePreventProperty == FirePreventPropertyEnum.no4 ||
+                          firePreventProperty == FirePreventPropertyEnum.no5I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no5Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6I123 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6I4 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6Ha ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no6Ni ||
+                          firePreventProperty == FirePreventPropertyEnum.no15 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no16I ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no16Ro ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no16No2 ||
+                          firePreventProperty ==
+                              FirePreventPropertyEnum.no16No3) &&
+                      container
+                          .read(leakageAlarmRequireProvider)
+                          .isContractCurrent) {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.yes.title,
+                );
+              } else {
+                expect(
+                  container.read(leakageAlarmRequireProvider).result,
+                  RequireSentenceEnum.no.title,
+                );
+              }
+            });
+          });
+        });
+      });
+    });
+  });
 }
-
-/// 延べ面積入力初期化
-final leakageAlarmReqSqTxtCtrlProvider = StateProvider((ref) {
-  String sq = ref.watch(leakageAlarmRequireProvider).sq.toString();
-  return TextEditingController(text: sq);
-});
-
-/// 床面積入力初期化
-final leakageAlarmReqSqFloorTxtCtrlProvider = StateProvider((ref) {
-  String sqFloor = ref.watch(leakageAlarmRequireProvider).sqFloor.toString();
-  return TextEditingController(text: sqFloor);
-});

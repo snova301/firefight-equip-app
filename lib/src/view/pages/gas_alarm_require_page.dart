@@ -105,7 +105,11 @@ class GasAlarmRequirePageState extends ConsumerState<GasAlarmRequirePage> {
                   /// 条件に一致すると表示される
                   ref.watch(gasAlarmRequireProvider).firePreventProperty ==
                               FirePreventPropertyEnum.no16No3 ||
-                          ref.watch(gasAlarmRequireProvider).isUnderGround
+                          (ref.watch(gasAlarmRequireProvider).isUnderGround &&
+                              ref
+                                  .watch(gasAlarmRequireProvider)
+                                  .firePreventProperty
+                                  .isSpecific)
                       ? InputTextCard(
                           title: '特定用途部分の床面積(整数のみ)',
                           unit: 'm2',
