@@ -215,10 +215,9 @@ class FireAlarmRequireNotifier extends StateNotifier<FireAlarmRequireClass> {
         //  イ　別表第一（二）項ニ、（五）項イ並びに（六）項イ（１）から（３）まで及びロに掲げる防火対象物
         //  ロ　別表第一（六）項ハに掲げる防火対象物（利用者を入居させ、又は宿泊させるものに限る。）
         // 施行令21条1項9号
-        firePreventProperty == FirePreventPropertyEnum.no16I ||
-            firePreventProperty == FirePreventPropertyEnum.no16Ro) {
+        firePreventProperty == FirePreventPropertyEnum.no16No2) {
       state = state.copyWith(result: RequireSentenceEnum.complex.title);
-      state = state.copyWith(reason: '延べ面積に関係なく設置が義務');
+      state = state.copyWith(reason: '詳細は消防法施行令第21条1項9号を参照');
     } else if (
         // 2項イロハ、3項、16項イ(2項、3項に供する部分)で地階、無窓階の場合
         // 床面積100m2以上で自火報設備が必要

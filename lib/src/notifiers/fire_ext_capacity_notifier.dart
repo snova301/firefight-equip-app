@@ -75,7 +75,7 @@ class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
     final firePreventProperty = state.firePreventProperty;
 
     /// 主要構造部が耐火構造でかつ壁及び天井が難燃材料なら2倍読み
-    /// 消防法施行規則6条2号
+    /// 消防法施行規則6条2項
     final intFireproof = state.isFireproof ? 2 : 1;
 
     /// 算定基準面積
@@ -85,7 +85,7 @@ class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
     if (
         // 算定基準面積が50m2
         // 1項イ、2項、16の2項、16の3項、17項、20項
-        // 消防法施行規則6条1号
+        // 消防法施行規則6条1項
         firePreventProperty == FirePreventPropertyEnum.no1I ||
             firePreventProperty == FirePreventPropertyEnum.no2I ||
             firePreventProperty == FirePreventPropertyEnum.no2Ro ||
@@ -98,7 +98,7 @@ class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
     } else if (
         // 延べ面積150m2以上で設置義務がある防火対象物
         // 1項ロ、4項、5項、6項イ4、6項ハ、6項ニ、9項、12項、13項、14項
-        // 消防法施行規則6条1号
+        // 消防法施行規則6条1項
         firePreventProperty == FirePreventPropertyEnum.no1Ro ||
             firePreventProperty == FirePreventPropertyEnum.no3I ||
             firePreventProperty == FirePreventPropertyEnum.no3Ro ||
@@ -121,7 +121,7 @@ class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
     } else if (
         // 延べ面積300m2以上で設置義務がある防火対象物
         // 7項、8項、10項、11項、15項
-        // 消防法施行規則6条1号
+        // 消防法施行規則6条1項
         firePreventProperty == FirePreventPropertyEnum.no7 ||
             firePreventProperty == FirePreventPropertyEnum.no8 ||
             firePreventProperty == FirePreventPropertyEnum.no10 ||
@@ -149,17 +149,17 @@ class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
     }
 
     /// B消火器必要
-    /// 消防法施行規則6条3号
+    /// 消防法施行規則6条3項
     state = state.copyWith(
         resultB: state.isCombust ? '使用する危険物または指定可燃物に適応した消火器が必要です' : '-');
 
     /// C消火器の本数(切り上げ)
-    /// 消防法施行規則6条4号
+    /// 消防法施行規則6条4項
     final resultC = (state.sqElectrocity / 100).ceil();
     state = state.copyWith(resultC: resultC);
 
     /// ボイラー室のA消火器付加設置の本数(切り上げ)
-    /// 消防法施行規則6条5号
+    /// 消防法施行規則6条5項
     final resultBoiler = (state.sqBoiler / 25).ceil();
     state = state.copyWith(resultBoiler: resultBoiler);
   }

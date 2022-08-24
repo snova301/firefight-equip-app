@@ -37,7 +37,7 @@ void main() {
 
   group('notifier test', () {
     /// 消防法施行令 第22条の1項の確認
-    test('no21-1', () {
+    test('no22-1', () {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
