@@ -1,15 +1,68 @@
+import 'package:firefight_equip/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// 使い方やライセンスページをリンクするためのページ
-class AboutPage extends StatelessWidget {
+class AboutPage extends ConsumerWidget {
   const AboutPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     /// 画面情報
     final screenWidth = MediaQuery.of(context).size.width;
+
+    /// リワード広告ユニットの初期化
+    RewardedAd? rewardedAd;
+
+    void initRewarded() {
+      rewardedAd = null;
+      RewardedAd.load(
+        adUnitId: AdsSettingsClass().rewardedAdUnitID(),
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            // print('$ad loaded.');
+            rewardedAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            // print('RewardedAd failed to load: $error');
+            rewardedAd = null;
+          },
+        ),
+      );
+    }
+
+    void showRewardedAd(RewardedAd? rewardedAd) {
+      if (rewardedAd == null) {
+        // print('null error');
+        return;
+      }
+      rewardedAd.fullScreenContentCallback = FullScreenContentCallback(
+          onAdShowedFullScreenContent: (RewardedAd ad) {
+        // print('$ad onAdShowedFullScreenContent.'),
+      }, onAdDismissedFullScreenContent: (RewardedAd ad) {
+        // print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        initRewarded();
+      }, onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        initRewarded();
+      }, onAdImpression: (RewardedAd ad) {
+        // print('$ad impression occurred.'),
+      });
+      rewardedAd.show(onUserEarnedReward: (
+        AdWithoutView ad,
+        RewardItem rewardItem,
+      ) {
+        // print('$ad, $rewardItem');
+      });
+    }
+
+    initRewarded();
 
     return Scaffold(
       appBar: AppBar(
@@ -64,6 +117,21 @@ class AboutPage extends StatelessWidget {
           //     trailing: const Icon(Icons.open_in_browser),
           //   ),
           // ),
+
+          /// admobリワード広告
+          Card(
+            child: ListTile(
+              leading: const Icon(
+                Icons.favorite_border,
+                color: Colors.pink,
+              ),
+              title: const Text('広告を見て開発を支援'),
+              contentPadding: const EdgeInsets.all(10),
+              onTap: () {
+                showRewardedAd(rewardedAd);
+              },
+            ),
+          ),
 
           /// オープンソースライセンスの表示
           Card(

@@ -31,17 +31,9 @@ class SettingPage extends ConsumerWidget {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8),
-              children: <Widget>[
+              children: const <Widget>[
                 /// ダークモードの設定
-                const _DarkmodeCard(),
-
-                /// 電線管設計データの削除
-                _DataRemoveCard(
-                  title: '電線管設計',
-                  func: () {
-                    // StateManagerClass().removeConduitCalc(ref);
-                  },
-                ),
+                _DarkmodeCard(),
               ],
             ),
           ),
@@ -71,53 +63,53 @@ class _DarkmodeCard extends ConsumerWidget {
   }
 }
 
-/// 電線管設計キャッシュデータ削除のwidget
-class _DataRemoveCard extends ConsumerWidget {
-  final String title;
-  final Function() func;
-  const _DataRemoveCard({
-    Key? key,
-    required this.title,
-    required this.func,
-  }) : super(key: key);
+// /// キャッシュデータ削除のwidget
+// class _DataRemoveCard extends ConsumerWidget {
+//   final String title;
+//   final Function() func;
+//   const _DataRemoveCard({
+//     Key? key,
+//     required this.title,
+//     required this.func,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Card(
-      child: ListTile(
-        title: Text('$title データを削除'),
-        textColor: Colors.red,
-        iconColor: Colors.red,
-        contentPadding: const EdgeInsets.all(10),
-        leading: const Icon(Icons.delete_outline),
-        onTap: () {
-          /// ダイアログ表示後削除
-          showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: const Text('注意'),
-              content: Text('以前の $title データが削除されます。'),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Cancel'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    /// shared_prefのデータを削除
-                    // StateManagerClass().removeCalc(ref);
-                    func();
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return Card(
+//       child: ListTile(
+//         title: Text('$title データを削除'),
+//         textColor: Colors.red,
+//         iconColor: Colors.red,
+//         contentPadding: const EdgeInsets.all(10),
+//         leading: const Icon(Icons.delete_outline),
+//         onTap: () {
+//           /// ダイアログ表示後削除
+//           showDialog<String>(
+//             context: context,
+//             builder: (BuildContext context) => AlertDialog(
+//               title: const Text('注意'),
+//               content: Text('以前の $title データが削除されます。'),
+//               actions: <Widget>[
+//                 TextButton(
+//                   child: const Text('Cancel'),
+//                   onPressed: () => Navigator.pop(context),
+//                 ),
+//                 TextButton(
+//                   child: const Text('OK'),
+//                   onPressed: () {
+//                     /// shared_prefのデータを削除
+//                     // StateManagerClass().removeCalc(ref);
+//                     func();
 
-                    /// 戻る
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+//                     /// 戻る
+//                     Navigator.pop(context);
+//                   },
+//                 ),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
