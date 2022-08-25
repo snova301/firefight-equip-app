@@ -1,4 +1,4 @@
-// import 'package:elec_facility_calc/ads_options.dart';
+import 'package:firefight_equip/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/notifiers/fire_report_require_notifier.dart';
 import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
@@ -32,7 +32,7 @@ class FireReportRequirePageState extends ConsumerState<FireReportRequirePage> {
     bool isDrawerFixed = checkResponsive(screenWidth);
 
     /// 広告の初期化
-    // AdsSettingsClass().initElecPowerRec();
+    AdsSettingsClass().initRecBanner();
 
     /// shared_prefのデータ保存用非同期providerの読み込み
     ref.watch(fireReportRequireSPSetProvider);
@@ -125,7 +125,7 @@ class FireReportRequirePageState extends ConsumerState<FireReportRequirePage> {
                   ),
 
                   /// 広告表示
-                  // existAds ? const ElecPowerRecBannerContainer() : Container(),
+                  existAds ? const RecBannerContainer() : Container(),
 
                   /// 結果表示
                   const SeparateText(title: '計算結果'),

@@ -1,3 +1,4 @@
+import 'package:firefight_equip/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 import 'package:firefight_equip/src/view/widgets/drawer_contents_widget.dart';
@@ -15,6 +16,9 @@ class ShowLawPage extends ConsumerWidget {
 
     /// レスポンシブ設定
     bool isDrawerFixed = checkResponsive(screenWidth);
+
+    /// 広告の初期化
+    AdsSettingsClass().initRecBanner();
 
     return Scaffold(
       appBar: AppBar(
@@ -60,6 +64,9 @@ class ShowLawPage extends ConsumerWidget {
                   cardColor: Colors.orange,
                   fontColor: Colors.white,
                 ),
+
+                /// 広告表示
+                existAds ? const RecBannerContainer() : Container(),
               ],
             ),
           ),

@@ -22,7 +22,7 @@ class MyHomePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('電気設備計算アシスタント'),
+        title: const Text('消防設備計算アシスタント'),
       ),
       body: Column(
         children: <Widget>[

@@ -1,3 +1,4 @@
+import 'package:firefight_equip/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/notifiers/catalog_list_notifier.dart';
 import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
@@ -20,7 +21,7 @@ class CatalogListPage extends ConsumerWidget {
     bool isDrawerFixed = checkResponsive(screenWidth);
 
     /// 広告の初期化
-    // AdsSettingsClass().initElecPowerRec();
+    AdsSettingsClass().initStdBanner();
 
     /// shared_prefのデータ保存用非同期providerの読み込み
     ref.watch(catalogListSPSetProvider);
@@ -41,10 +42,16 @@ class CatalogListPage extends ConsumerWidget {
           Expanded(
             child: Column(
               children: [
+                /// 情報表示
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: const Text('タップするとweb資料のリンクに飛びます'),
                 ),
+
+                /// 広告
+                existAds ? const StdBannerContainer() : Container(),
+
+                /// リスト本体
                 Expanded(
                   child: ListView.builder(
                     padding: EdgeInsets.fromLTRB(

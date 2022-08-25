@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firefight_equip/src/view/pages/home_page.dart';
@@ -30,7 +30,7 @@ void main() async {
 
     /// Admobの初期化
     if (isAndroid || isIOS) {
-      // MobileAds.instance.initialize();
+      MobileAds.instance.initialize();
     }
 
     /// runApp w/ Riverpod
