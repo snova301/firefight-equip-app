@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCrVbaGu7RmD0lrniNt5Wd_bHa5EkD8nnI',
-    appId: '1:587716803801:android:1594ff2472b3bf45e6d2c8',
+    appId: '1:587716803801:android:9c2cc6ed30d4f056e6d2c8',
     messagingSenderId: '587716803801',
     projectId: 'firefight-equip-app',
     storageBucket: 'firefight-equip-app.appspot.com',

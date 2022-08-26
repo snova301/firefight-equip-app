@@ -10,7 +10,7 @@ final fireAlarmRequireProvider =
   return FireAlarmRequireNotifier();
 });
 
-/// 配線リスト入力のNotifierの定義
+/// 自火報設置義務判定のNotifierの定義
 class FireAlarmRequireNotifier extends StateNotifier<FireAlarmRequireClass> {
   // 空のデータとして初期化
   FireAlarmRequireNotifier()

@@ -69,7 +69,7 @@ class MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '電気設備計算アシスタント',
+      title: '消防設備計算アシスタント',
       home: const MyHomePage(),
       theme: ThemeData(
         brightness: isDarkMode ? Brightness.dark : Brightness.light,

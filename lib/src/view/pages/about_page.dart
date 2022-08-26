@@ -3,7 +3,6 @@ import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/view/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// 使い方やライセンスページをリンクするためのページ
 class AboutPage extends ConsumerWidget {
@@ -15,54 +14,7 @@ class AboutPage extends ConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     /// リワード広告ユニットの初期化
-    RewardedAd? rewardedAd;
-
-    void initRewarded() {
-      rewardedAd = null;
-      RewardedAd.load(
-        adUnitId: AdsSettingsClass().rewardedAdUnitID(),
-        request: const AdRequest(),
-        rewardedAdLoadCallback: RewardedAdLoadCallback(
-          onAdLoaded: (RewardedAd ad) {
-            // print('$ad loaded.');
-            rewardedAd = ad;
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            // print('RewardedAd failed to load: $error');
-            rewardedAd = null;
-          },
-        ),
-      );
-    }
-
-    void showRewardedAd(RewardedAd? rewardedAd) {
-      if (rewardedAd == null) {
-        // print('null error');
-        return;
-      }
-      rewardedAd.fullScreenContentCallback = FullScreenContentCallback(
-          onAdShowedFullScreenContent: (RewardedAd ad) {
-        // print('$ad onAdShowedFullScreenContent.'),
-      }, onAdDismissedFullScreenContent: (RewardedAd ad) {
-        // print('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
-        initRewarded();
-      }, onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        // print('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        initRewarded();
-      }, onAdImpression: (RewardedAd ad) {
-        // print('$ad impression occurred.'),
-      });
-      rewardedAd.show(onUserEarnedReward: (
-        AdWithoutView ad,
-        RewardItem rewardItem,
-      ) {
-        // print('$ad, $rewardItem');
-      });
-    }
-
-    initRewarded();
+    existAds ? ref.read(rewardedAdProvider.notifier).initRewarded() : null;
 
     return Scaffold(
       appBar: AppBar(
@@ -76,12 +28,12 @@ class AboutPage extends ConsumerWidget {
         children: <Widget>[
           /// 各URLをオープン
           /// 使い方ページ
-          const LinkCard(
-            urlTitle: '使い方',
-            isSubtitle: true,
-            urlName:
-                'https://snova301.github.io/AppService/elec_calculator/howtouse.html',
-          ),
+          // const LinkCard(
+          //   urlTitle: '使い方',
+          //   isSubtitle: true,
+          //   urlName:
+          //       'https://snova301.github.io/AppService/elec_calculator/howtouse.html',
+          // ),
 
           /// 利用規約ページ
           const LinkCard(
@@ -119,26 +71,32 @@ class AboutPage extends ConsumerWidget {
           // ),
 
           /// admobリワード広告
-          Card(
-            child: ListTile(
-              leading: const Icon(
-                Icons.favorite_border,
-                color: Colors.pink,
-              ),
-              title: const Text('広告を見て開発を支援'),
-              contentPadding: const EdgeInsets.all(10),
-              onTap: () {
-                showRewardedAd(rewardedAd);
-              },
-            ),
-          ),
+          existAds
+              ? Card(
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.favorite_border,
+                      // color: Colors.pink,
+                    ),
+                    title: const Text('広告を見て開発を支援'),
+                    contentPadding: const EdgeInsets.all(10),
+                    onTap: () {
+                      /// 広告の表示
+                      ref.read(rewardedAdProvider.notifier).showRewardedAd();
+                    },
+                  ),
+                )
+              : Container(),
 
           /// オープンソースライセンスの表示
           Card(
             child: ListTile(
               title: const Text('オープンソースライセンス'),
               onTap: () {
-                showLicensePage(context: context);
+                showLicensePage(
+                  context: context,
+                  applicationName: '消防設備計算アシスタント',
+                );
               },
             ),
           ),
