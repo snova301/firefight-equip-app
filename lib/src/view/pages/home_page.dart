@@ -159,7 +159,10 @@ class _AgreementContainer extends ConsumerWidget {
           const Text(
             'ご利用は',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey,
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -175,13 +178,19 @@ class _AgreementContainer extends ConsumerWidget {
             child: const Text(
               '利用規約',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10, color: Colors.blue),
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.blue,
+              ),
             ),
           ),
           const Text(
             'と',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey,
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -197,13 +206,20 @@ class _AgreementContainer extends ConsumerWidget {
             child: const Text(
               'プライバシーポリシー',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10, color: Colors.blue),
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.blue,
+              ),
             ),
           ),
           const Text(
             'に同意したものとします。',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

@@ -20,7 +20,7 @@ class LeakageAlarmRequireNotifier
           sqFloor: 0,
           isContractCurrent: false,
           result: RequireSentenceEnum.none.title,
-          reason: '',
+          reason: '市町村条例等には注意してください',
         ));
 
   /// 防火対象物の更新

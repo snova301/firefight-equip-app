@@ -19,7 +19,7 @@ enum PageNameEnum {
   fireExt('消火器具計算', SelectFireExtPage(), Icons.fire_extinguisher),
   fireExtRequire('消火器具 設置基準計算', FireExtRequirePage(), null),
   fireExtCapacity('消火器具 能力単位計算', FireExtCapacityPage(), null),
-  alarmEquip('警報設備計算', SelectFireAlarmPage(), Icons.alarm),
+  alarmEquip('警報設備計算', SelectFireAlarmPage(), Icons.fireplace_rounded),
   fireAlarmRequire('自動火災警報設備 設置基準計算', FireAlarmRequirePage(), null),
   gasAlarmRequire('ガス漏れ警報設備 設置基準計算', GasAlarmRequirePage(), null),
   leakageAlarmRequire('漏電火災警報器 設置基準計算', LeakageAlarmRequirePage(), null),
@@ -39,7 +39,7 @@ enum PageNameEnum {
 /// 防火対象物の一覧Enum
 enum FirePreventPropertyEnum {
   no1I('(1)項イ  劇場、映画館、演芸場又は観覧場', true),
-  no1Ro('(2)項ロ  公会堂又は集会場', true),
+  no1Ro('(1)項ロ  公会堂又は集会場', true),
   no2I('(2)項イ  キャバレー、カフェー、ナイトクラブ、その他', true),
   no2Ro('(2)項ロ  遊技場又はダンスホール', true),
   no2Ha('(2)項ハ  性風俗関連特殊営業を営む店舗、その他', true),
@@ -113,7 +113,8 @@ enum RequireSentenceEnum {
   none('-'),
   yes('設置義務があります'),
   no('設置義務はありません'),
-  complex('設置義務は当該用途の基準による');
+  complex('設置義務は当該用途の基準による'),
+  reasonProviso('ただし、市町村条例や危険物施設のため、設置義務になる場合があります');
 
   final String title;
 

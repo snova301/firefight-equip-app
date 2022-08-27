@@ -139,28 +139,28 @@ class FireExtCapacityNotifier extends StateNotifier<FireExtCapacityClass> {
     }
 
     /// A消火器の基本の能力単位計算
-    if (sqStd != 0) {
+    if (sqStd == 0) {
+      /// 算定基準面積が0のとき
+      state = state.copyWith(resultA: 0);
+    } else {
       /// 算定基準面積が0ではない
       final resultA = state.sq / sqStd / intFireproof;
       state = state.copyWith(resultA: resultA);
-    } else {
-      /// 算定基準面積が0のとき
-      state = state.copyWith(resultA: 0);
     }
-
-    /// B消火器必要
-    /// 消防法施行規則6条3項
-    state = state.copyWith(
-        resultB: state.isCombust ? '使用する危険物または指定可燃物に適応した消火器が必要です' : '-');
 
     /// C消火器の本数(切り上げ)
     /// 消防法施行規則6条4項
     final resultC = (state.sqElectrocity / 100).ceil();
     state = state.copyWith(resultC: resultC);
 
-    /// ボイラー室のA消火器付加設置の本数(切り上げ)
+    /// B消火器必要
+    /// 消防法施行規則6条3項
+    state = state.copyWith(
+        resultB: state.isCombust ? '使用する危険物または指定可燃物に適応した消火器が必要です' : '-');
+
+    /// ボイラー室のA消火器付加設置の能力単位
     /// 消防法施行規則6条5項
-    final resultBoiler = (state.sqBoiler / 25).ceil();
+    final resultBoiler = state.sqBoiler / 25;
     state = state.copyWith(resultBoiler: resultBoiler);
   }
 }

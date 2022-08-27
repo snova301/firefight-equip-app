@@ -1,3 +1,4 @@
+import 'package:firefight_equip/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/view/widgets/drawer_contents_widget.dart';
 import 'package:firefight_equip/src/view/widgets/page_push_widget.dart';
@@ -16,6 +17,9 @@ class SelectFireExtPage extends ConsumerWidget {
     /// レスポンシブ設定
     bool isDrawerFixed = checkResponsive(screenWidth);
 
+    /// 広告の初期化
+    AdsSettingsClass().initRecBanner();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(PageNameEnum.fireExt.title),
@@ -29,8 +33,22 @@ class SelectFireExtPage extends ConsumerWidget {
           Expanded(
             child: ListView(
               padding:
-                  EdgeInsets.fromLTRB(screenWidth / 8, 60, screenWidth / 8, 60),
+                  EdgeInsets.fromLTRB(screenWidth / 10, 0, screenWidth / 8, 60),
               children: <Widget>[
+                /// 注意書き
+                Container(
+                  padding: EdgeInsets.fromLTRB(
+                      screenWidth / 15, 10, screenWidth / 15, 50),
+                  child: const Text(
+                    'ご利用時は必ず最新の法令や市町村条例を確認し、有資格者や関係機関と相談してください。',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+
+                /// ページ遷移ボタン
                 PagePushButton(
                   title: PageNameEnum.fireExtRequire.title,
                   pagepush: PageNameEnum.fireExtRequire.page,
@@ -39,6 +57,9 @@ class SelectFireExtPage extends ConsumerWidget {
                   title: PageNameEnum.fireExtCapacity.title,
                   pagepush: PageNameEnum.fireExtCapacity.page,
                 ),
+
+                /// 広告表示
+                existAds ? const RecBannerContainer() : Container(),
               ],
             ),
           ),

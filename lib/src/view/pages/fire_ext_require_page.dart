@@ -81,6 +81,17 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                     },
                   ),
 
+                  /// 地階、無窓階、3F以上のチェックボックス
+                  CheckBoxCard(
+                    title: '地階、無窓階、3F以上',
+                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
+                    func: (bool newBool) {
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateIsNoWindow(newBool);
+                    },
+                  ),
+
                   /// 床面積入力
                   /// 地階、無窓階、3F以上の階は床面積で判断
                   ref.watch(fireExtRequireProvider).isNoWindow
@@ -98,17 +109,6 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
                         )
                       : Container(),
 
-                  /// 地階、無窓階、3F以上のチェックボックス
-                  CheckBoxCard(
-                    title: '地階、無窓階、3F以上',
-                    isChecked: ref.watch(fireExtRequireProvider).isNoWindow,
-                    func: (bool newBool) {
-                      ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsNoWindow(newBool);
-                    },
-                  ),
-
                   /// 少量危険物のチェックボックス
                   CheckBoxCard(
                     title: '少量危険物、指定可燃物',
@@ -122,25 +122,41 @@ class FireExtRequirePageState extends ConsumerState<FireExtRequirePage> {
 
                   /// 火を使用する器具のチェックボックス
                   /// 3項の判断に使用
-                  CheckBoxCard(
-                    title: '火を使用する器具を設置',
-                    isChecked: ref.watch(fireExtRequireProvider).isUsedFire,
-                    func: (bool newBool) {
-                      ref
-                          .read(fireExtRequireProvider.notifier)
-                          .updateIsUsedFire(newBool);
-                    },
-                  ),
+                  ref.watch(fireExtRequireProvider).firePreventProperty ==
+                              FirePreventPropertyEnum.no3I ||
+                          ref
+                                  .watch(fireExtRequireProvider)
+                                  .firePreventProperty ==
+                              FirePreventPropertyEnum.no3Ro
+                      ? CheckBoxCard(
+                          title: '火を使用する器具を設置',
+                          isChecked:
+                              ref.watch(fireExtRequireProvider).isUsedFire,
+                          func: (bool newBool) {
+                            ref
+                                .read(fireExtRequireProvider.notifier)
+                                .updateIsUsedFire(newBool);
+                          },
+                        )
+                      : Container(),
 
                   /// 計算実行ボタン
                   RunButton(
                     // paddingSize: blockWidth,
                     func: () {
+                      /// TextEditingControllerのデータをproviderへ渡す
                       final sqTxtCtrl =
                           ref.read(fireExtReqSqTxtCtrlProvider).text;
+                      final sqFloorTxtCtrl =
+                          ref.read(fireExtReqSqFloorTxtCtrlProvider).text;
                       ref
                           .read(fireExtRequireProvider.notifier)
                           .updateSq(sqTxtCtrl);
+                      ref
+                          .read(fireExtRequireProvider.notifier)
+                          .updateSqFloor(sqFloorTxtCtrl);
+
+                      /// 実行
                       ref.read(fireExtRequireProvider.notifier).run();
                     },
                   ),

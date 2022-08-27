@@ -29,7 +29,7 @@ class CheckBoxCard extends ConsumerWidget {
           style: const TextStyle(
             fontSize: 13,
           ),
-          overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.clip,
         ),
       ),
     );

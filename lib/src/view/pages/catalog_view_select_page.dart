@@ -44,8 +44,8 @@ class CatalogListPage extends ConsumerWidget {
               children: [
                 /// 情報表示
                 Container(
-                  padding: const EdgeInsets.all(10),
-                  child: const Text('タップするとweb資料のリンクに飛びます'),
+                  padding: const EdgeInsets.all(12),
+                  child: Text('資料は$maxNum個まで設定できます'),
                 ),
 
                 /// 広告
@@ -54,28 +54,13 @@ class CatalogListPage extends ConsumerWidget {
                 /// リスト本体
                 Expanded(
                   child: ListView.builder(
-                    padding: EdgeInsets.fromLTRB(
-                      screenWidth / 10,
-                      10,
-                      screenWidth / 10,
-                      20,
-                    ),
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                     itemCount: ref.watch(catalogListProvider).length,
                     itemBuilder: (context, index) {
                       return _CardListTile(
                         index: index,
                       );
                     },
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    '資料は$maxNum個まで設定できます',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
                   ),
                 ),
               ],

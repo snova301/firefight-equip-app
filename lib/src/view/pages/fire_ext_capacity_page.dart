@@ -111,7 +111,7 @@ class FireExtCapacityPageState extends ConsumerState<FireExtCapacityPage> {
 
                   /// 少量危険物のチェックボックス
                   CheckBoxCard(
-                    title: '主要構造部が耐火構造でかつ壁及び天井が難燃材料',
+                    title: '主要構造部が耐火構造で、かつ壁及び天井が難燃材料',
                     isChecked: ref.watch(fireExtCapacityProvider).isFireproof,
                     func: (bool newBool) {
                       ref
@@ -166,7 +166,7 @@ class FireExtCapacityPageState extends ConsumerState<FireExtCapacityPage> {
 
                   /// A火災の能力単位
                   OutputText(
-                    preface: 'A消火器の能力単位 : ',
+                    preface: '能力単位 : ',
                     result:
                         ref.watch(fireExtCapacityProvider).resultA.toString(),
                   ),
@@ -178,16 +178,18 @@ class FireExtCapacityPageState extends ConsumerState<FireExtCapacityPage> {
                         '${ref.watch(fireExtCapacityProvider).resultC.toString()} 本',
                   ),
 
-                  /// ボイラー室付加設置の消火器の本数
+                  /// ボイラー室付加設置の消火器の能力単位
                   OutputText(
-                    preface: 'ボイラー室がある場所の消火器本数(付加設置) : ',
-                    result:
-                        '${ref.watch(fireExtCapacityProvider).resultBoiler.toString()} 本',
+                    preface: '能力単位(ボイラー室等への付加設置) : ',
+                    result: ref
+                        .watch(fireExtCapacityProvider)
+                        .resultBoiler
+                        .toString(),
                   ),
 
                   /// B火災の能力単位
                   OutputText(
-                    preface: 'B消火器の能力単位(付加設置) : ',
+                    preface: '少量危険物や指定可燃物を貯蔵、取扱う場所の付加設置 : ',
                     result: ref.watch(fireExtCapacityProvider).resultB,
                   ),
                 ],

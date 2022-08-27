@@ -49,9 +49,7 @@ class FirePreventPropertySelectDD extends ConsumerWidget {
                 return DropdownMenuItem<String>(
                   alignment: AlignmentDirectional.centerStart,
                   value: value.title,
-                  child: Text(
-                    value.title,
-                  ),
+                  child: Text(value.title),
                 );
               },
             ).toList(),

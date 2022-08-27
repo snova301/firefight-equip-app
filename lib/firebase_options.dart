@@ -63,12 +63,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBoLDiI2SUguhRdKTP-1nCYB6BysFL0beI',
-    appId: '1:587716803801:ios:3aae03c441dd96f1e6d2c8',
+    appId: '1:587716803801:ios:9da669c8af35e0d6e6d2c8',
     messagingSenderId: '587716803801',
     projectId: 'firefight-equip-app',
     storageBucket: 'firefight-equip-app.appspot.com',
-    iosClientId: '587716803801-nub22mb1sq8dkefdf0nl657evcldk2qr.apps.googleusercontent.com',
-    iosBundleId: 'com.example.firefightEquip',
+    iosClientId: '587716803801-dkcffn64hutvko7inq5k7r9bvnpgu4un.apps.googleusercontent.com',
+    iosBundleId: 'com.github.snova301.firefightEquip',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

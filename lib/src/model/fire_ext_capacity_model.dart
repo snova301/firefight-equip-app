@@ -19,8 +19,8 @@ class FireExtCapacityClass with _$FireExtCapacityClass {
     /// 出力
     required double resultA, // A火災の能力単位
     required String resultB, // B火災の能力単位
+    required double resultBoiler, // ボイラー室への付加設置
     required int resultC, // C火災の消火器の本数
-    required int resultBoiler, // ボイラー室への付加設置
   }) = _FireExtCapacityClass;
 
   /// from Json

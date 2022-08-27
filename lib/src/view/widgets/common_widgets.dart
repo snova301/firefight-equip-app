@@ -134,7 +134,7 @@ void openUrlwSnackbar(String urlname, BuildContext context) async {
   // }
   var url = Uri.parse(urlname);
   if (await canLaunchUrl(url)) {
-    launchUrl(url);
+    launchUrl(url, mode: LaunchMode.externalApplication);
   } else {
     SnackBarAlertClass(context: context).snackbar('URLが無効です');
   }

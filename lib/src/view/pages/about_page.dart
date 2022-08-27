@@ -11,7 +11,7 @@ class AboutPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// 画面情報
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
 
     /// リワード広告ユニットの初期化
     existAds ? ref.read(rewardedAdProvider.notifier).initRewarded() : null;
@@ -21,11 +21,19 @@ class AboutPage extends ConsumerWidget {
         title: Text(PageNameEnum.about.title),
       ),
       body: ListView(
-        padding:
-            EdgeInsets.fromLTRB(screenWidth / 10, 40, screenWidth / 10, 20),
+        padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+        // EdgeInsets.fromLTRB(screenWidth / 10, 40, screenWidth / 10, 20),
         //  const EdgeInsets.all(8),
 
         children: <Widget>[
+          /// 情報更新日
+          const Card(
+            child: ListTile(
+              title: Text('法令等について'),
+              subtitle: Text('2022/7/1時点の情報をもとにアプリを製作しています'),
+            ),
+          ),
+
           /// 各URLをオープン
           /// 使い方ページ
           // const LinkCard(
@@ -82,7 +90,9 @@ class AboutPage extends ConsumerWidget {
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       /// 広告の表示
-                      ref.read(rewardedAdProvider.notifier).showRewardedAd();
+                      ref
+                          .read(rewardedAdProvider.notifier)
+                          .showRewardedAd(context);
                     },
                   ),
                 )

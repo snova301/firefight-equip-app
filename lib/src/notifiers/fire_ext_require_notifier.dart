@@ -21,7 +21,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
           isCombust: false,
           isUsedFire: false,
           result: RequireSentenceEnum.none.title,
-          reason: '-',
+          reason: RequireSentenceEnum.none.title,
         ));
 
   /// 防火対象物の更新
@@ -129,7 +129,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
             state.sq >= 150) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
       state =
-          state.copyWith(reason: '火を使用する器具が設置されているため、延べ面積150m2以上で消火器具の設置が義務');
+          state.copyWith(reason: '火を使用する器具が設置されていないため、延べ面積150m2以上で消火器具の設置が義務');
     } else if (
         // 延べ面積300m2以上で設置義務がある防火対象物
         // 7項、8項、10項、11項、15項
@@ -158,7 +158,7 @@ class FireExtRequireNotifier extends StateNotifier<FireExtRequireClass> {
       state = state.copyWith(reason: '地階、無窓階、3F以上の階は床面積が50m2以上で消火器具の設置が義務');
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
-      state = state.copyWith(reason: 'ただし、市町村条例や危険物施設のため、設置義務になる場合があります');
+      state = state.copyWith(reason: RequireSentenceEnum.reasonProviso.title);
     }
   }
 }

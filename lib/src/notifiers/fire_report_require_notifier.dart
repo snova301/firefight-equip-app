@@ -20,7 +20,7 @@ class FireReportRequireNotifier extends StateNotifier<FireReportRequireClass> {
           isDistance: false,
           isAlwaysReport: false,
           result: RequireSentenceEnum.none.title,
-          reason: '',
+          reason: '市町村条例等には注意してください',
         ));
 
   /// 防火対象物の更新
@@ -117,6 +117,12 @@ class FireReportRequireNotifier extends StateNotifier<FireReportRequireClass> {
                 firePreventProperty == FirePreventPropertyEnum.no15) &&
             state.sq >= 1000) {
       state = state.copyWith(result: RequireSentenceEnum.yes.title);
+    } else if (
+        // 用途によって設置義務が変化
+        // 16項イ、16項ロ
+        firePreventProperty == FirePreventPropertyEnum.no16I ||
+            firePreventProperty == FirePreventPropertyEnum.no16Ro) {
+      state = state.copyWith(result: RequireSentenceEnum.complex.title);
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
       // state = state.copyWith(reason: 'ただし、市町村条例には注意してください');

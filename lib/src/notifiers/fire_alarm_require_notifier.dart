@@ -26,7 +26,7 @@ class FireAlarmRequireNotifier extends StateNotifier<FireAlarmRequireClass> {
           floor: FireAlarmFloorEnum.floor1.title,
           usedType: FireAlarmUsedTypeEnum.none.title,
           result: RequireSentenceEnum.none.title,
-          reason: '-',
+          reason: RequireSentenceEnum.none.title,
         ));
 
   /// 防火対象物の更新
@@ -282,7 +282,7 @@ class FireAlarmRequireNotifier extends StateNotifier<FireAlarmRequireClass> {
       state = state.copyWith(reason: '通信機器室の床面積が500m2以上で、設置が義務');
     } else {
       state = state.copyWith(result: RequireSentenceEnum.no.title);
-      state = state.copyWith(reason: 'ただし、市町村条例や危険物施設のため、設置義務になる場合があります');
+      state = state.copyWith(reason: RequireSentenceEnum.reasonProviso.title);
     }
   }
 }

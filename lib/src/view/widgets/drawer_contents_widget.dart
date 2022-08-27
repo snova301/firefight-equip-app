@@ -81,7 +81,7 @@ class DrawerContentsListTile extends ConsumerWidget {
               MaterialPageRoute(
                 builder: (context) => PageNameEnum.fireExt.page,
               ),
-              (route) => false,
+              (_) => false,
             );
           },
         ),

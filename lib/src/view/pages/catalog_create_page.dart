@@ -35,23 +35,20 @@ class CatalogCreatePage extends ConsumerWidget {
             /// サイズ指定されていないとエラーなのでExpandedで囲む
             Expanded(
               child: ListView(
-                padding: EdgeInsets.fromLTRB(
-                  screenWidth / 10,
-                  20,
-                  screenWidth / 10,
-                  10,
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                 children: <Widget>[
                   /// タイトル入力
                   _CreateTextField(
                     controller: ref.watch(catalogTitleTxtCtrlProvider),
                     labelText: 'Title',
+                    maxLen: 200,
                   ),
 
                   /// URL入力
                   _CreateTextField(
                     controller: ref.watch(catalogUrlTxtCtrlProvider),
                     labelText: 'URL',
+                    maxLen: 400,
                   ),
 
                   /// 計算実行
@@ -86,11 +83,13 @@ class CatalogCreatePage extends ConsumerWidget {
 class _CreateTextField extends ConsumerWidget {
   final TextEditingController controller;
   final String labelText;
+  final int maxLen;
 
   const _CreateTextField({
     Key? key,
     required this.controller,
     required this.labelText,
+    required this.maxLen,
   }) : super(key: key);
 
   @override
@@ -99,9 +98,9 @@ class _CreateTextField extends ConsumerWidget {
       minVerticalPadding: 10,
       title: TextFormField(
         controller: controller,
-        maxLength: 300,
+        maxLength: maxLen,
         // minLines: 3,
-        // maxLines: 3,
+        maxLines: 3,
         decoration: InputDecoration(
           labelText: labelText,
           alignLabelWithHint: true,
