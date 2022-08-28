@@ -12,7 +12,7 @@ import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 消火器具設置義務計算ページ
+/// 火災通報設備設置義務計算ページ
 class FireReportRequirePage extends ConsumerStatefulWidget {
   const FireReportRequirePage({Key? key}) : super(key: key);
 

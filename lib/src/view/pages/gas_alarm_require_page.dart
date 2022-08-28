@@ -12,7 +12,7 @@ import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 消火器具設置義務計算ページ
+/// ガス漏れ警報器設置義務計算ページ
 class GasAlarmRequirePage extends ConsumerStatefulWidget {
   const GasAlarmRequirePage({Key? key}) : super(key: key);
 

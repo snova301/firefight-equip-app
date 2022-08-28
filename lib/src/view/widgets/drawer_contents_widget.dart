@@ -42,6 +42,24 @@ class DrawerContentsListTile extends ConsumerWidget {
     this.fontSize = 14,
   }) : super(key: key);
 
+  void toPagePush(BuildContext context, String pagename, dynamic toPage) {
+    /// ページ遷移のanalytics
+    AnalyticsService().logPage(pagename);
+
+    /// もとのページを削除し、トップページにプッシュしてから予定のページへプッシュ
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PageNameEnum.toppage.page,
+      ),
+      (_) => false,
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => toPage),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
@@ -72,16 +90,10 @@ class DrawerContentsListTile extends ConsumerWidget {
           ),
           leading: Icon(PageNameEnum.fireExt.icon),
           onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.fireExt.title);
-
-            /// ページプッシュしてもとのページを削除
-            Navigator.pushAndRemoveUntil(
+            toPagePush(
               context,
-              MaterialPageRoute(
-                builder: (context) => PageNameEnum.fireExt.page,
-              ),
-              (_) => false,
+              PageNameEnum.fireExt.title,
+              PageNameEnum.fireExt.page,
             );
           },
         ),
@@ -94,16 +106,10 @@ class DrawerContentsListTile extends ConsumerWidget {
           ),
           leading: Icon(PageNameEnum.alarmEquip.icon),
           onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.alarmEquip.title);
-
-            /// ページプッシュしてもとのページを削除
-            Navigator.pushAndRemoveUntil(
+            toPagePush(
               context,
-              MaterialPageRoute(
-                builder: (context) => PageNameEnum.alarmEquip.page,
-              ),
-              (route) => false,
+              PageNameEnum.alarmEquip.title,
+              PageNameEnum.alarmEquip.page,
             );
           },
         ),
@@ -116,16 +122,10 @@ class DrawerContentsListTile extends ConsumerWidget {
           ),
           leading: Icon(PageNameEnum.showLaw.icon),
           onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.showLaw.title);
-
-            /// ページプッシュしてもとのページを削除
-            Navigator.pushAndRemoveUntil(
+            toPagePush(
               context,
-              MaterialPageRoute(
-                builder: (context) => PageNameEnum.showLaw.page,
-              ),
-              (route) => false,
+              PageNameEnum.showLaw.title,
+              PageNameEnum.showLaw.page,
             );
           },
         ),
@@ -138,16 +138,10 @@ class DrawerContentsListTile extends ConsumerWidget {
           ),
           leading: Icon(PageNameEnum.catalogList.icon),
           onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.catalogList.title);
-
-            /// ページプッシュしてもとのページを削除
-            Navigator.pushAndRemoveUntil(
+            toPagePush(
               context,
-              MaterialPageRoute(
-                builder: (context) => PageNameEnum.catalogList.page,
-              ),
-              (route) => false,
+              PageNameEnum.catalogList.title,
+              PageNameEnum.catalogList.page,
             );
           },
         ),
@@ -160,34 +154,10 @@ class DrawerContentsListTile extends ConsumerWidget {
           ),
           leading: Icon(PageNameEnum.setting.icon),
           onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.setting.title);
-
-            // Navigator.popUntil(context, (route) => route.isFirst);
-            Navigator.push(
+            toPagePush(
               context,
-              MaterialPageRoute(
-                builder: (context) => PageNameEnum.setting.page,
-              ),
-            );
-          },
-        ),
-
-        /// 計算方法リンク
-        ListTile(
-          title: Text(
-            '計算方法',
-            style: TextStyle(fontSize: fontSize),
-          ),
-          // leading: const Icon(Icons.architecture),
-          trailing: const Icon(Icons.open_in_browser),
-          onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage('計算方法');
-
-            openUrlwSnackbar(
-              'https://snova301.github.io/AppService/elec_calculator/method.html',
-              context,
+              PageNameEnum.setting.title,
+              PageNameEnum.setting.page,
             );
           },
         ),
@@ -199,14 +169,10 @@ class DrawerContentsListTile extends ConsumerWidget {
             style: TextStyle(fontSize: fontSize),
           ),
           onTap: () {
-            /// ページ遷移のanalytics
-            AnalyticsService().logPage(PageNameEnum.about.title);
-
-            Navigator.push(
+            toPagePush(
               context,
-              MaterialPageRoute(
-                builder: (context) => PageNameEnum.about.page,
-              ),
+              PageNameEnum.about.title,
+              PageNameEnum.about.page,
             );
           },
         ),

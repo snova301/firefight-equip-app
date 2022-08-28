@@ -36,12 +36,12 @@ class AboutPage extends ConsumerWidget {
 
           /// 各URLをオープン
           /// 使い方ページ
-          // const LinkCard(
-          //   urlTitle: '使い方',
-          //   isSubtitle: true,
-          //   urlName:
-          //       'https://snova301.github.io/AppService/elec_calculator/howtouse.html',
-          // ),
+          const LinkCard(
+            urlTitle: '使い方',
+            isSubtitle: true,
+            urlName:
+                'https://snova301.github.io/AppService/firefight_equip/howtouse.html',
+          ),
 
           /// 利用規約ページ
           const LinkCard(
@@ -105,7 +105,7 @@ class AboutPage extends ConsumerWidget {
               onTap: () {
                 showLicensePage(
                   context: context,
-                  applicationName: '消防設備計算アシスタント',
+                  // applicationName: '消防設備計算アシスタント',
                 );
               },
             ),

@@ -27,7 +27,7 @@ class CatalogListPage extends ConsumerWidget {
     ref.watch(catalogListSPSetProvider);
 
     /// 個数設定
-    int maxNum = 3;
+    int maxNum = 20;
 
     return Scaffold(
       appBar: AppBar(

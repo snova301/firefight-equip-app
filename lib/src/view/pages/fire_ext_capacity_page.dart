@@ -38,7 +38,10 @@ class FireExtCapacityPageState extends ConsumerState<FireExtCapacityPage> {
     ref.watch(fireExtCapacitySPSetProvider);
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        /// unfocusする
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
         appBar: AppBar(
           title: Text(PageNameEnum.fireExtCapacity.title),

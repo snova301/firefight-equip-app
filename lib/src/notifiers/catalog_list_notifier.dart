@@ -18,7 +18,7 @@ class CatalogListNotifier extends StateNotifier<List<CatalogListClass>> {
             id: const Uuid().v4(),
             title:
                 'これはサンプルです。画面下部の追加ボタンから新規作成しましょう。URLをタップするとブラウザでwebページを開くことができます。',
-            url: 'https://snova301.github.io/AppService/',
+            url: 'https://www.fdma.go.jp/',
           )
         ]);
 

@@ -13,7 +13,7 @@ import 'package:firefight_equip/src/view/widgets/separate_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 消火器具設置義務計算ページ
+/// 自火報設置義務計算ページ
 class FireAlarmRequirePage extends ConsumerStatefulWidget {
   const FireAlarmRequirePage({Key? key}) : super(key: key);
 
@@ -184,16 +184,22 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                   ),
 
                   /// 特定1階段等防火対象物
-                  CheckBoxCard(
-                    title: '特定1階段等防火対象物',
-                    isChecked: ref.watch(fireAlarmRequireProvider).isOneStairs,
-                    func: (bool newBool) {
-                      /// 防火対象物に特定防火対象物を選択した場合のみ選択可能
-                      ref
-                          .read(fireAlarmRequireProvider.notifier)
-                          .updateIsOneStairs(newBool);
-                    },
-                  ),
+                  ref
+                          .watch(fireAlarmRequireProvider)
+                          .firePreventProperty
+                          .isSpecific
+                      ? CheckBoxCard(
+                          title: '特定1階段等防火対象物',
+                          isChecked:
+                              ref.watch(fireAlarmRequireProvider).isOneStairs,
+                          func: (bool newBool) {
+                            /// 防火対象物に特定防火対象物を選択した場合のみ選択可能
+                            ref
+                                .read(fireAlarmRequireProvider.notifier)
+                                .updateIsOneStairs(newBool);
+                          },
+                        )
+                      : Container(),
 
                   /// 計算実行ボタン
                   RunButton(

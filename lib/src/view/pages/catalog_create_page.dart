@@ -5,7 +5,7 @@ import 'package:firefight_equip/src/view/widgets/run_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 消火器具設置義務計算ページ
+/// カタログリストページ
 class CatalogCreatePage extends ConsumerWidget {
   const CatalogCreatePage({Key? key}) : super(key: key);
 
@@ -40,7 +40,7 @@ class CatalogCreatePage extends ConsumerWidget {
                   /// タイトル入力
                   _CreateTextField(
                     controller: ref.watch(catalogTitleTxtCtrlProvider),
-                    labelText: 'Title',
+                    labelText: 'タイトル',
                     maxLen: 200,
                   ),
 
