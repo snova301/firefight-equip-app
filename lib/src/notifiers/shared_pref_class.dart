@@ -10,6 +10,7 @@ import 'package:firefight_equip/src/model/leakage_alarm_require_model.dart';
 import 'package:firefight_equip/src/model/setting_model.dart';
 import 'package:firefight_equip/src/notifiers/catalog_list_notifier.dart';
 import 'package:firefight_equip/src/notifiers/fire_alarm_require_notifier.dart';
+import 'package:firefight_equip/src/notifiers/fire_ext_adapt_notifier.dart';
 import 'package:firefight_equip/src/notifiers/fire_ext_capacity_notifier.dart';
 import 'package:firefight_equip/src/notifiers/fire_ext_require_notifier.dart';
 import 'package:firefight_equip/src/notifiers/fire_report_require_notifier.dart';
@@ -297,6 +298,18 @@ final fireExtRequireSPSetProvider = FutureProvider((ref) async {
 
   ///  書込み
   prefs.setString(PageNameEnum.fireExtRequire.name, json);
+});
+
+/// shared_prefで設定データを非同期で保存するprovider
+final fireExtAdaptSPSetProvider = FutureProvider((ref) async {
+  /// 初期化
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  ///  データの整形
+  var json = jsonEncode(ref.watch(fireExtAdaptProvider).toJson());
+
+  ///  書込み
+  prefs.setString(PageNameEnum.fireExtAdapt.name, json);
 });
 
 /// shared_prefで設定データを非同期で保存するprovider

@@ -57,6 +57,10 @@ class SelectFireExtPage extends ConsumerWidget {
                   title: PageNameEnum.fireExtCapacity.title,
                   pagepush: PageNameEnum.fireExtCapacity.page,
                 ),
+                PagePushButton(
+                  title: PageNameEnum.fireExtAdapt.title,
+                  pagepush: PageNameEnum.fireExtAdapt.page,
+                ),
 
                 /// 広告表示
                 existAds ? const RecBannerContainer() : Container(),

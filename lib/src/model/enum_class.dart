@@ -1,4 +1,5 @@
 import 'package:firefight_equip/src/view/pages/catalog_view_select_page.dart';
+import 'package:firefight_equip/src/view/pages/fire_ext_adapt_page.dart';
 import 'package:firefight_equip/src/view/pages/fire_report_require_page.dart';
 import 'package:firefight_equip/src/view/pages/leakage_alarm_require_page.dart';
 import 'package:firefight_equip/src/view/pages/show_law_select_page.dart';
@@ -19,6 +20,7 @@ enum PageNameEnum {
   fireExt('消火器具計算', SelectFireExtPage(), Icons.fire_extinguisher),
   fireExtRequire('消火器具 設置基準計算', FireExtRequirePage(), null),
   fireExtCapacity('消火器具 能力単位計算', FireExtCapacityPage(), null),
+  fireExtAdapt('消火器 適応火災', FireExtAdaptPage(), null),
   alarmEquip('警報設備計算', SelectFireAlarmPage(), Icons.fireplace_rounded),
   fireAlarmRequire('自動火災警報設備 設置基準計算', FireAlarmRequirePage(), null),
   gasAlarmRequire('ガス漏れ警報設備 設置基準計算', GasAlarmRequirePage(), null),
@@ -119,4 +121,23 @@ enum RequireSentenceEnum {
   final String title;
 
   const RequireSentenceEnum(this.title);
+}
+
+/// 消化器の種類
+enum FireExtAdaptEnum {
+  none('-'),
+  waterRod('水消火器(棒状)'),
+  waterFog('水消火器(霧状)'),
+  loadedStreamRod('強化液消火器(棒状)'),
+  loadedStreamFog('強化液消火器(霧状)'),
+  form('機械泡消火器'),
+  chemForm('化学泡消火器'),
+  co2('二酸化炭素消火器'),
+  halide('ハロゲン化物消火器'),
+  powderABC('リン酸塩類粉末消火器'),
+  powderBicarbonate('リン酸塩類粉末消火器');
+
+  final String title;
+
+  const FireExtAdaptEnum(this.title);
 }
