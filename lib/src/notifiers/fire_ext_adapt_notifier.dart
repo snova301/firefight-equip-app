@@ -12,14 +12,20 @@ final fireExtAdaptProvider =
 class FireExtAdaptNotifier extends StateNotifier<FireExtAdaptClass> {
   // 空のデータとして初期化
   FireExtAdaptNotifier()
-      : super(const FireExtAdaptClass(
+      : super(
+          FireExtAdaptClass(
             fireExtAdapt: FireExtAdaptEnum.none,
-            resultA: '-',
-            resultB: '-',
-            resultC: '-'));
+            resultA: FireExtAdaptEnum.none.resultA,
+            resultB: FireExtAdaptEnum.none.resultB,
+            resultC: FireExtAdaptEnum.none.resultC,
+          ),
+        );
 
-  /// 消化器種類の更新
+  /// 消火器種類の更新
   void updateFireExt(FireExtAdaptEnum newVal) {
     state = state.copyWith(fireExtAdapt: newVal);
+    state = state.copyWith(resultA: newVal.resultA);
+    state = state.copyWith(resultB: newVal.resultB);
+    state = state.copyWith(resultC: newVal.resultC);
   }
 }

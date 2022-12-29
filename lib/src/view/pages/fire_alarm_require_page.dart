@@ -85,11 +85,12 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                   ),
 
                   /// 階の選択
-                  const Text('階の選択'),
+                  // const Text('階の選択'),
                   DDButton(
                     value: ref.watch(fireAlarmRequireProvider).floor,
                     list:
                         FireAlarmFloorEnum.values.map((e) => e.title).toList(),
+                    strTitle: '階',
                     func: ((newVal) {
                       ref
                           .read(fireAlarmRequireProvider.notifier)
@@ -98,12 +99,13 @@ class FireAlarmRequirePageState extends ConsumerState<FireAlarmRequirePage> {
                   ),
 
                   /// その階の用途の選択
-                  const Text('階の用途'),
+                  // const Text('階の用途'),
                   DDButton(
                     value: ref.watch(fireAlarmRequireProvider).usedType,
                     list: FireAlarmUsedTypeEnum.values
                         .map((e) => e.title)
                         .toList(),
+                    strTitle: '階の用途',
                     func: ((newVal) {
                       ref
                           .read(fireAlarmRequireProvider.notifier)

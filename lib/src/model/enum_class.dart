@@ -124,20 +124,24 @@ enum RequireSentenceEnum {
 }
 
 /// 消化器の種類
+/// resultA, resultB, resultCはそれぞれA火災, B火災, C火災に対応しているか
 enum FireExtAdaptEnum {
-  none('-'),
-  waterRod('水消火器(棒状)'),
-  waterFog('水消火器(霧状)'),
-  loadedStreamRod('強化液消火器(棒状)'),
-  loadedStreamFog('強化液消火器(霧状)'),
-  form('機械泡消火器'),
-  chemForm('化学泡消火器'),
-  co2('二酸化炭素消火器'),
-  halide('ハロゲン化物消火器'),
-  powderABC('リン酸塩類粉末消火器'),
-  powderBicarbonate('リン酸塩類粉末消火器');
+  none('-', '-', '-', '-'),
+  waterRod('水消火器(棒状)', '○', '-', '-'),
+  waterFog('水消火器(霧状)', '○', '-', '○'),
+  loadedStreamRod('強化液消火器(棒状)', '○', '-', '-'),
+  loadedStreamFog('強化液消火器(霧状)', '○', '○', '○'),
+  form('機械泡消火器', '○', '○', '-'),
+  chemForm('化学泡消火器', '○', '○', '-'),
+  co2('二酸化炭素消火器', '-', '○', '○'),
+  halide('ハロゲン化物消火器', '-', '○', '○'),
+  powderABC('リン酸塩類粉末消火器', '○', '○', '○'),
+  powderBicarbonate('炭酸水素塩類粉末消火器', '-', '○', '○');
 
   final String title;
+  final String resultA;
+  final String resultB;
+  final String resultC;
 
-  const FireExtAdaptEnum(this.title);
+  const FireExtAdaptEnum(this.title, this.resultA, this.resultB, this.resultC);
 }

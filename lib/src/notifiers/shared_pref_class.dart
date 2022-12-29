@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firefight_equip/src/model/catalog_list_model.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
 import 'package:firefight_equip/src/model/fire_alarm_require_model.dart';
+import 'package:firefight_equip/src/model/fire_ext_adapt_model.dart';
 import 'package:firefight_equip/src/model/fire_ext_capacity_model.dart';
 import 'package:firefight_equip/src/model/fire_ext_require_model.dart';
 import 'package:firefight_equip/src/model/fire_report_require_model.dart';
@@ -44,6 +45,7 @@ class SharedPrefClass {
     getPrefSetting(ref, prefs);
     getPrefFireExtRequire(ref, prefs);
     getPrefFireExtCapacity(ref, prefs);
+    getPrefFireExtAdapt(ref, prefs);
     getPrefFireAlarmRequire(ref, prefs);
     getPrefFireReportRequire(ref, prefs);
     getPrefGasAlarmRequire(ref, prefs);
@@ -119,6 +121,23 @@ class SharedPrefClass {
         ref
             .read(fireExtCapacityProvider.notifier)
             .updateIsCombust(getFireExtCapacityData.isCombust);
+      } catch (e) {
+        // print(e);
+      }
+    }
+  }
+
+  /// fireExtAdapt
+  void getPrefFireExtAdapt(WidgetRef ref, SharedPreferences prefs) {
+    var getFireExtAdapt = prefs.getString(PageNameEnum.fireExtAdapt.name);
+    if (getFireExtAdapt != null) {
+      var getFireExtAdaptData =
+          FireExtAdaptClass.fromJson(jsonDecode(getFireExtAdapt));
+      try {
+        /// 値をproviderへ
+        ref
+            .read(fireExtAdaptProvider.notifier)
+            .updateFireExt(getFireExtAdaptData.fireExtAdapt);
       } catch (e) {
         // print(e);
       }

@@ -1,7 +1,7 @@
 import 'package:firefight_equip/ads_options.dart';
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/notifiers/fire_ext_adapt_notifier.dart';
 import 'package:firefight_equip/src/notifiers/shared_pref_class.dart';
-import 'package:firefight_equip/src/view/widgets/checkbox_card_widget.dart';
 import 'package:firefight_equip/src/view/widgets/dropdown_button_widget.dart';
 import 'package:firefight_equip/src/view/widgets/output_text_widget.dart';
 import 'package:firefight_equip/src/view/widgets/responsive_widget.dart';
@@ -55,11 +55,20 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
                   /// 入力表示
                   const SeparateText(title: '条件'),
 
-                  /// 消化器種類選択のドロップダウンリスト
+                  /// 消火器種類選択のドロップダウンリスト
                   DDButton(
-                    value: 'a',
-                    list: ['a', 'list', 'sa'],
-                    func: (String val) {},
+                    // value: FireExtAdaptEnum.none.title,
+                    value: ref.watch(fireExtAdaptProvider).fireExtAdapt.title,
+                    list: FireExtAdaptEnum.values.map((e) => e.title).toList(),
+                    strTitle: '消火器の種類',
+                    func: (String val) {
+                      /// 値の検索とFireExtAdaptEnumへの変換
+                      var newVal = FireExtAdaptEnum.values
+                          .firstWhere((element) => element.title == val);
+                      ref
+                          .read(fireExtAdaptProvider.notifier)
+                          .updateFireExt(newVal);
+                    },
                   ),
 
                   /// 結果表示
@@ -67,17 +76,17 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
 
                   /// 結果表示(A火災に対して)
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).result,
+                    result: ref.watch(fireExtAdaptProvider).resultA,
                   ),
 
                   /// 結果表示(B火災に対して)
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).result,
+                    result: ref.watch(fireExtAdaptProvider).resultB,
                   ),
 
                   /// 結果表示(C火災に対して)
                   OutputText(
-                    result: ref.watch(fireExtRequireProvider).result,
+                    result: ref.watch(fireExtAdaptProvider).resultC,
                   ),
 
                   /// 広告表示
