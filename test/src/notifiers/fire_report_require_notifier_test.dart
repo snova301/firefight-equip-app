@@ -1,4 +1,5 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/model/fire_report_require_model.dart';
 import 'package:firefight_equip/src/notifiers/fire_report_require_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,8 +10,15 @@ void main() {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
-          fireReportRequireProvider
-              .overrideWithValue(FireReportRequireNotifier()),
+          /// riverpod v2.x
+          fireReportRequireProvider.overrideWithProvider(StateNotifierProvider<
+              FireReportRequireNotifier, FireReportRequireClass>((ref) {
+            return FireReportRequireNotifier();
+          })),
+
+          /// riverpod v1.x
+          // fireReportRequireProvider
+          //     .overrideWithValue(FireReportRequireNotifier()),
         ],
       );
 
@@ -40,8 +48,16 @@ void main() {
         /// ProviderContainerの定義
         final container = ProviderContainer(
           overrides: [
-            fireReportRequireProvider
-                .overrideWithValue(FireReportRequireNotifier()),
+            /// riverpod v2.x
+            fireReportRequireProvider.overrideWithProvider(
+                StateNotifierProvider<FireReportRequireNotifier,
+                    FireReportRequireClass>((ref) {
+              return FireReportRequireNotifier();
+            })),
+
+            /// riverpod v1.x
+            // fireReportRequireProvider
+            //     .overrideWithValue(FireReportRequireNotifier()),
           ],
         );
 
@@ -75,8 +91,16 @@ void main() {
         /// ProviderContainerの定義
         final container = ProviderContainer(
           overrides: [
-            fireReportRequireProvider
-                .overrideWithValue(FireReportRequireNotifier()),
+            /// riverpod v2.x
+            fireReportRequireProvider.overrideWithProvider(
+                StateNotifierProvider<FireReportRequireNotifier,
+                    FireReportRequireClass>((ref) {
+              return FireReportRequireNotifier();
+            })),
+
+            /// riverpod v1.x
+            // fireReportRequireProvider
+            //     .overrideWithValue(FireReportRequireNotifier()),
           ],
         );
 
@@ -132,8 +156,16 @@ void main() {
         /// ProviderContainerの定義
         final container = ProviderContainer(
           overrides: [
-            fireReportRequireProvider
-                .overrideWithValue(FireReportRequireNotifier()),
+            /// riverpod v2.x
+            fireReportRequireProvider.overrideWithProvider(
+                StateNotifierProvider<FireReportRequireNotifier,
+                    FireReportRequireClass>((ref) {
+              return FireReportRequireNotifier();
+            })),
+
+            /// riverpod v1.x
+            // fireReportRequireProvider
+            //     .overrideWithValue(FireReportRequireNotifier()),
           ],
         );
 
@@ -206,8 +238,16 @@ void main() {
         /// ProviderContainerの定義
         final container = ProviderContainer(
           overrides: [
-            fireReportRequireProvider
-                .overrideWithValue(FireReportRequireNotifier()),
+            /// riverpod v2.x
+            fireReportRequireProvider.overrideWithProvider(
+                StateNotifierProvider<FireReportRequireNotifier,
+                    FireReportRequireClass>((ref) {
+              return FireReportRequireNotifier();
+            })),
+
+            /// riverpod v1.x
+            // fireReportRequireProvider
+            //     .overrideWithValue(FireReportRequireNotifier()),
           ],
         );
 
@@ -236,8 +276,16 @@ void main() {
         /// ProviderContainerの定義
         final container = ProviderContainer(
           overrides: [
-            fireReportRequireProvider
-                .overrideWithValue(FireReportRequireNotifier()),
+            /// riverpod v2.x
+            fireReportRequireProvider.overrideWithProvider(
+                StateNotifierProvider<FireReportRequireNotifier,
+                    FireReportRequireClass>((ref) {
+              return FireReportRequireNotifier();
+            })),
+
+            /// riverpod v1.x
+            // fireReportRequireProvider
+            //     .overrideWithValue(FireReportRequireNotifier()),
           ],
         );
 

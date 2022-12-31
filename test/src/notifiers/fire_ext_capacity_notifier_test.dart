@@ -1,3 +1,4 @@
+import 'package:firefight_equip/src/model/fire_ext_capacity_model.dart';
 import 'package:firefight_equip/src/notifiers/fire_ext_capacity_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,7 +9,14 @@ void main() {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
-          fireExtCapacityProvider.overrideWithValue(FireExtCapacityNotifier()),
+          /// riverpod v2.x
+          fireExtCapacityProvider.overrideWithProvider(StateNotifierProvider<
+              FireExtCapacityNotifier, FireExtCapacityClass>((ref) {
+            return FireExtCapacityNotifier();
+          })),
+
+          /// riverpod v1.x
+          // fireExtCapacityProvider.overrideWithValue(FireExtCapacityNotifier()),
         ],
       );
 

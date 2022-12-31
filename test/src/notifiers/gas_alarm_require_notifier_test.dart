@@ -1,4 +1,5 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/model/gas_alarm_require_model.dart';
 import 'package:firefight_equip/src/notifiers/gas_alarm_require_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,7 +10,14 @@ void main() {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
-          gasAlarmRequireProvider.overrideWithValue(GasAlarmRequireNotifier()),
+          /// riverpod v2.x
+          gasAlarmRequireProvider.overrideWithProvider(StateNotifierProvider<
+              GasAlarmRequireNotifier, GasAlarmRequireClass>((ref) {
+            return GasAlarmRequireNotifier();
+          })),
+
+          /// riverpod v1.x
+          // gasAlarmRequireProvider.overrideWithValue(GasAlarmRequireNotifier()),
         ],
       );
 
@@ -38,7 +46,14 @@ void main() {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
-          gasAlarmRequireProvider.overrideWithValue(GasAlarmRequireNotifier()),
+          /// riverpod v2.x
+          gasAlarmRequireProvider.overrideWithProvider(StateNotifierProvider<
+              GasAlarmRequireNotifier, GasAlarmRequireClass>((ref) {
+            return GasAlarmRequireNotifier();
+          })),
+
+          /// riverpod v1.x
+          // gasAlarmRequireProvider.overrideWithValue(GasAlarmRequireNotifier()),
         ],
       );
 

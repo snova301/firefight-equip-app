@@ -1,4 +1,5 @@
 import 'package:firefight_equip/src/model/enum_class.dart';
+import 'package:firefight_equip/src/model/fire_alarm_require_model.dart';
 import 'package:firefight_equip/src/notifiers/fire_alarm_require_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,8 +10,15 @@ void main() {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
-          fireAlarmRequireProvider
-              .overrideWithValue(FireAlarmRequireNotifier()),
+          /// riverpod v2.x
+          fireAlarmRequireProvider.overrideWithProvider(StateNotifierProvider<
+              FireAlarmRequireNotifier, FireAlarmRequireClass>((ref) {
+            return FireAlarmRequireNotifier();
+          })),
+
+          /// riverpod v1.x
+          // fireAlarmRequireProvider
+          //     .overrideWithValue(FireAlarmRequireNotifier()),
         ],
       );
 
@@ -38,8 +46,15 @@ void main() {
       /// ProviderContainerの定義
       final container = ProviderContainer(
         overrides: [
-          fireAlarmRequireProvider
-              .overrideWithValue(FireAlarmRequireNotifier()),
+          /// riverpod v2.x
+          fireAlarmRequireProvider.overrideWithProvider(StateNotifierProvider<
+              FireAlarmRequireNotifier, FireAlarmRequireClass>((ref) {
+            return FireAlarmRequireNotifier();
+          })),
+
+          /// riverpod v1.x
+          // fireAlarmRequireProvider
+          //     .overrideWithValue(FireAlarmRequireNotifier()),
         ],
       );
 
