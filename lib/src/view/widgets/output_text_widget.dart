@@ -6,7 +6,7 @@ class OutputText extends ConsumerWidget {
   final String? preface; // 序文
   final String result; // 出力結果
   final double? resultFontSize; // 結果のフォントサイズ
-  final Color? resultFontColor; // 結果のフォントサイズ
+  final Color? resultFontColor; // 結果のフォントカラー
 
   const OutputText({
     Key? key,

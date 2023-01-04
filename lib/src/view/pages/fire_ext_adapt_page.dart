@@ -71,21 +71,54 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
                   ),
 
                   /// 結果表示
-                  const SeparateText(title: '結果'),
+                  const SeparateText(title: '消火器の適応火災の結果'),
 
-                  /// 結果表示(A火災に対して)
-                  OutputText(
-                    result: ref.watch(fireExtAdaptProvider).resultA,
+                  Table(
+                    border: TableBorder.all(
+                      color: Colors.grey,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    children: [
+                      TableRow(
+                        children: [
+                          const FireExtAdaptOutputText(
+                            result: 'A火災',
+                          ),
+                          FireExtAdaptOutputText(
+                            result: ref.watch(fireExtAdaptProvider).resultA,
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          const FireExtAdaptOutputText(
+                            result: 'B火災',
+                          ),
+                          FireExtAdaptOutputText(
+                            result: ref.watch(fireExtAdaptProvider).resultB,
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          const FireExtAdaptOutputText(
+                            result: 'C火災',
+                          ),
+                          FireExtAdaptOutputText(
+                            result: ref.watch(fireExtAdaptProvider).resultC,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
 
-                  /// 結果表示(B火災に対して)
-                  OutputText(
-                    result: ref.watch(fireExtAdaptProvider).resultB,
-                  ),
-
-                  /// 結果表示(C火災に対して)
-                  OutputText(
-                    result: ref.watch(fireExtAdaptProvider).resultC,
+                  /// 説明
+                  const OutputText(
+                    result: '○は適応, △は一部適応, -は適応していないことを示す',
+                    resultFontColor: Colors.grey,
+                    resultFontSize: 12,
                   ),
 
                   /// 広告表示
@@ -95,6 +128,34 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// 結果表示用テーブルセルwidget
+class FireExtAdaptOutputText extends ConsumerWidget {
+  final String result; // 出力結果
+
+  const FireExtAdaptOutputText({
+    Key? key,
+    required this.result,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: Text(
+        result,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+        overflow: TextOverflow.clip,
       ),
     );
   }
