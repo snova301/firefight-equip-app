@@ -73,6 +73,7 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
                   /// 結果表示
                   const SeparateText(title: '消火器の適応火災の結果'),
 
+                  /// 結果の表
                   Table(
                     border: TableBorder.all(
                       color: Colors.grey,
@@ -88,6 +89,7 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
                           ),
                           FireExtAdaptOutputText(
                             result: ref.watch(fireExtAdaptProvider).resultA,
+                            textColor: Colors.red,
                           ),
                         ],
                       ),
@@ -98,6 +100,7 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
                           ),
                           FireExtAdaptOutputText(
                             result: ref.watch(fireExtAdaptProvider).resultB,
+                            textColor: Colors.red,
                           ),
                         ],
                       ),
@@ -108,6 +111,7 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
                           ),
                           FireExtAdaptOutputText(
                             result: ref.watch(fireExtAdaptProvider).resultC,
+                            textColor: Colors.red,
                           ),
                         ],
                       ),
@@ -116,7 +120,7 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
 
                   /// 説明
                   const OutputText(
-                    result: '○は適応, △は一部適応, -は適応していないことを示す',
+                    result: '○は適応, △は一部適応, -は適応していない',
                     resultFontColor: Colors.grey,
                     resultFontSize: 12,
                   ),
@@ -136,10 +140,12 @@ class FireExtAdaptPageState extends ConsumerState<FireExtAdaptPage> {
 /// 結果表示用テーブルセルwidget
 class FireExtAdaptOutputText extends ConsumerWidget {
   final String result; // 出力結果
+  final Color? textColor; // 文字色
 
   const FireExtAdaptOutputText({
     Key? key,
     required this.result,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -150,8 +156,8 @@ class FireExtAdaptOutputText extends ConsumerWidget {
       child: Text(
         result,
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: Colors.red,
+        style: TextStyle(
+          color: textColor,
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
