@@ -60,3 +60,4 @@ ads_options.dart
 assets/fonts/*
 assets/icon/*
 .firebase/*
+pubspec.lock
